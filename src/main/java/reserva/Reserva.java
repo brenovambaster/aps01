@@ -121,13 +121,15 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva{" +
-                "dataAlocacao=" + dataAlocacao +
+                "usuario=" + usuario +
+                ", equipamentos=" + equipamentos +
+                ", sala=" + sala +
+                ", tipo='" + tipo + '\'' +
+                ", dataAlocacao=" + dataAlocacao +
                 ", horaInicio=" + horaInicio +
-                ", Ativo=" + isAtivo() +
                 ", horaFim=" + horaFim +
                 ", assunto='" + assunto + '\'' +
-                ", usuario=" + usuario +
-                ", equipamentos =" + equipamentos +
+                ", ativo=" + ativo +
                 '}';
     }
 }

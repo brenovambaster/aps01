@@ -20,7 +20,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReservaTest {
-    public Reserva reserva;
+    private Reserva reserva;
 
     @BeforeEach
     void setUp() {

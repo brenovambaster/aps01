@@ -14,7 +14,7 @@ import java.util.List;
 //TODO: REVISAR TODA ESSA CLASSE, BEM COMO OS TESTES
 public class Reserva {
     private Usuario usuario;
-    private List<Equipamento> equipamentos;
+    private final List<Equipamento> equipamentos;
     private Sala sala;
     private String tipo;
     private LocalDate dataAlocacao;

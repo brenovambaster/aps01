@@ -2,10 +2,10 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package funcionario;
+package entidades.funcionario;
 
-import campus.Campus;
-import usuario.Usuario;
+import entidades.campus.Campus;
+import entidades.usuario.Usuario;
 
 /**
  * @author Breno Vambáster

@@ -2,10 +2,11 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package reserva;
-import  sala.Sala;
+package entidades.reserva;
+import entidades.sala.Sala;
+
 public class ReservaSala {
-    private  Sala sala;
+    private Sala sala;
     private  Reserva reserva;
     private String tipo; // reserva para aula ou para reuniao
 

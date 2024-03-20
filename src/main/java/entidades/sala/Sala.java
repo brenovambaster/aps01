@@ -2,9 +2,9 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package sala;
+package entidades.sala;
 
-import predio.Predio;
+import entidades.predio.Predio;
 
 public class Sala {
     private Integer numeroSala;

@@ -2,7 +2,7 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package equipamento;
+package entidades.equipamento;
 
 public class Equipamento {
     private String nome;

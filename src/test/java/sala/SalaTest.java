@@ -4,11 +4,12 @@
 
 package sala;
 
+import entidades.sala.Sala;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import predio.Predio;
+import entidades.predio.Predio;
 
 class SalaTest {
     private Sala sala;

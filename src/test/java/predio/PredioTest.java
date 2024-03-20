@@ -4,7 +4,8 @@
 
 package predio;
 
-import campus.Campus;
+import entidades.campus.Campus;
+import entidades.predio.Predio;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

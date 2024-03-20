@@ -2,12 +2,13 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package reserva;
-import sala.Sala;
-import usuario.Usuario;
+package entidades.reserva;
+import entidades.sala.Sala;
+import entidades.usuario.Usuario;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import equipamento.Equipamento;
+import entidades.equipamento.Equipamento;
+
 import java.util.ArrayList;
 import java.util.List;
 

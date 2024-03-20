@@ -2,9 +2,9 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package predio;
+package entidades.predio;
 
-import campus.Campus;
+import entidades.campus.Campus;
 
 public class Predio {
     private String nome;

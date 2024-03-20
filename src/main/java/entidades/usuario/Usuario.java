@@ -2,9 +2,9 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package usuario;
+package entidades.usuario;
 
-import campus.Campus;
+import entidades.campus.Campus;
 
 public abstract class Usuario {
     protected String nome;

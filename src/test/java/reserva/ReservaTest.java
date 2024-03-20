@@ -4,15 +4,16 @@
 
 package reserva;
 
-import campus.Campus;
-import equipamento.Equipamento;
-import professor.Professor;
-import usuario.Usuario;
+import entidades.campus.Campus;
+import entidades.equipamento.Equipamento;
+import entidades.professor.Professor;
+import entidades.reserva.Reserva;
+import entidades.usuario.Usuario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import predio.Predio;
-import sala.Sala;
+import entidades.predio.Predio;
+import entidades.sala.Sala;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

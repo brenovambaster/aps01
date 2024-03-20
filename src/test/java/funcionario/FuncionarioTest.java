@@ -1,10 +1,11 @@
 package funcionario;
 
+import entidades.funcionario.Funcionario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import usuario.Usuario;
-import campus.Campus;
+import entidades.usuario.Usuario;
+import entidades.campus.Campus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,7 +64,7 @@ class FuncionarioTest extends Usuario {
 
     @Test
     void testSetCampus() {
-        Campus campus = new campus.Campus("Campus 2", "Rua 32, Vilage 2");
+        Campus campus = new Campus("Campus 2", "Rua 32, Vilage 2");
         funcionario.setCampus(campus);
         assertEquals("Campus 2", funcionario.getCampus().getNome());
     }

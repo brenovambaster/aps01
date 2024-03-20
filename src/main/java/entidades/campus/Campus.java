@@ -2,10 +2,14 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package campus;
+package entidades.campus;
 
 public class Campus {
-    protected  String nome, endereco;
+    protected String nome, endereco;
+
+    public Campus() {
+        this(null, null);
+    }
 
     public Campus(String nome, String endereco) {
         this.nome = nome;

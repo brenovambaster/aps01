@@ -34,9 +34,9 @@
 
 6. Equipameno
 
-    - [ ] Equipamento
-    - [ ] EquipamentoModel
-    - [ ] EquipamentoModelTest
+    - [x] Equipamento
+    - [x] EquipamentoModel
+    - [x] EquipamentoModelTest
 
 7. Funcionario
 
@@ -50,3 +50,4 @@
 ## Anotações:
 
 1. Revisar todos os models e verificar se `` private Integer id = 0;``
+2. Refatorar métodos do Model na próxima iteração

@@ -25,7 +25,7 @@ class PredioModelTest {
     void create() {
         Predio predio = new Predio("Predio 1", null);
         predio.setId(predioModel.create(predio));
-        assertEquals(0, predioModel.get(0).getId());
+        assertEquals(predio, predioModel.get(predio.getId()));
     }
 
     @Test

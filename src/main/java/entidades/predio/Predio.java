@@ -9,10 +9,19 @@ import entidades.campus.Campus;
 public class Predio {
     private String nome;
     private Campus campus;
+    private  Integer id;
 
     public Predio(String nome, Campus campus) {
         this.nome = nome;
         this.campus = campus;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {

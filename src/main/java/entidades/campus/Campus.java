@@ -4,16 +4,31 @@
 
 package entidades.campus;
 
+/**
+ * @summary This class is responsible for creating a Campus object
+ * @attribute {@code String nome}
+ * @attribute {@code String endereco}
+ * @attribute {@code Integer id}
+ */
 public class Campus {
     protected String nome, endereco;
+    protected Integer id;
 
     public Campus() {
-        this(null, null);
+
     }
 
     public Campus(String nome, String endereco) {
         this.nome = nome;
         this.endereco = endereco;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -37,6 +52,7 @@ public class Campus {
         return "Campus{" +
                 "nome='" + nome + '\'' +
                 ", endereco='" + endereco + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

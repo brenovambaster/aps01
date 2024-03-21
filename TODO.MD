@@ -4,46 +4,49 @@
 
 1. Campus :white_check_mark:
 
-   - [x] Campus
-   - [x] CampusModel
-   - [x] CampusModelTest
+    - [x] Campus
+    - [x] CampusModel
+    - [x] CampusModelTest
 
 2. Predio :white_check_mark:
 
-   - [x] Predio
-   - [x] PredioModel
-   - [x] PredioModelTest
+    - [x] Predio
+    - [x] PredioModel
+    - [x] PredioModelTest
 
 3. Sala :white_check_mark:
 
-   - [x] Sala
-   - [x] SalaModel
-   - [x] SalaModelTest
+    - [x] Sala
+    - [x] SalaModel
+    - [x] SalaModelTest
 
-4. Reserva :white_check_mark:
+4. Reserva
 
-   - [ ] Reserva
-   - [ ] ReservaModel
-   - [ ] ReservaModelTest
+    - [ ] Reserva
+    - [ ] ReservaModel
+    - [ ] ReservaModelTest
 
 5. Professor
 
-   - [ ] Professor
-   - [ ] ProfessorModel
-   - [ ] ProfessorModelTest
+    - [x] Professor
+    - [x] ProfessorModel
+    - [x] ProfessorModelTest
 
 6. Equipameno
 
-   - [ ] Equipamento
-   - [ ] EquipamentoModel
-   - [ ] EquipamentoModelTest
+    - [ ] Equipamento
+    - [ ] EquipamentoModel
+    - [ ] EquipamentoModelTest
 
 7. Funcionario
 
-   - [ ] Funcionario
-   - [ ] FuncionarioModel
-   - [ ] FuncionarioModelTest
+    - [ ] Funcionario
+    - [ ] FuncionarioModel
+    - [ ] FuncionarioModelTest
 
-8. Usuario ::
+8. Usuario
+    * Adicionado o atributo id.
 
-   Não foi refatorado nesta iteração
+## Anotações:
+
+1. Revisar todos os models e verificar se `` private Integer id = 0;``

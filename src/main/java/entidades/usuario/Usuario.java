@@ -6,7 +6,16 @@ package entidades.usuario;
 
 import entidades.campus.Campus;
 
+/**
+ * @atribute id: Integer
+ * @atribute nome: String
+ * @atribute cargo: String
+ * @atribute ramal: String
+ * @atribute campus: Campus
+ * @see Campus
+ */
 public abstract class Usuario {
+    protected Integer id;
     protected String nome;
     protected String cargo;
     protected String ramal;
@@ -23,6 +32,13 @@ public abstract class Usuario {
         this.setCampus(campus);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

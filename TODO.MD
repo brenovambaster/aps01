@@ -23,8 +23,8 @@
 4. Reserva
 
     - [x] Reserva
-    - [ ] ReservaModel
-    - [ ] ReservaModelTest
+    - [x] ReservaModel
+    - [x] ReservaModelTest
 
 5. Professor
 
@@ -51,7 +51,10 @@
 
 #### Para a próxima iteração:
 
+0. Olhar todos os TO-DO's do código
 1. Revisar todos os models e verificar se `` private Integer id = 0;``
 2. Refatorar métodos do Model na próxima iteração
 3. Todas as classes Model devem implementar a interface IMetodos
-4. A sala deve conhecer sua reservas
+4. A sala deve conhecer sua reservas ?? discutir para a próxima iteração
+5. Impedir que reservas aconteçam em salas que estão ocupadas.
+6. 

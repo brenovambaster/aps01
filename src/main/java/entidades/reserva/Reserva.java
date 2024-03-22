@@ -42,6 +42,19 @@ public class Reserva {
         this.setUsuario(usuario);
     }
 
+    /**
+     * Recebe uma lista de equipamentos e adiciona essa lista a Reserva.
+     * Esse método é diferente do método addEquipamento. O método addEquipamento
+     * adiciona um equipamento por vez.
+     *
+     * @param equipamentos
+     * @see Reserva#addEquipamento(Equipamento)
+     */
+    public void setEquipamentos(List<Equipamento> equipamentos) {
+        this.equipamentos.clear();
+        this.equipamentos.addAll(equipamentos);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -114,6 +127,11 @@ public class Reserva {
         this.usuario = usuario;
     }
 
+    /**
+     * Adiciona um equipamento por vez à lista de equipamentos da Reserva.
+     *
+     * @param equipamento
+     */
     public void addEquipamento(Equipamento equipamento) {
 
         this.equipamentos.add(equipamento);

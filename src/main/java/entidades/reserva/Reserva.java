@@ -3,10 +3,13 @@
  ******************************************************************************/
 
 package entidades.reserva;
+
 import entidades.sala.Sala;
 import entidades.usuario.Usuario;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 import entidades.equipamento.Equipamento;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.List;
 
 //TODO: REVISAR TODA ESSA CLASSE, BEM COMO OS TESTES
 public class Reserva {
+    private Integer id;
     private Usuario usuario;
     private final List<Equipamento> equipamentos;
     private Sala sala;
@@ -36,6 +40,14 @@ public class Reserva {
         this.setHoraFim(horaFim);
         this.setAssunto(assunto);
         this.setUsuario(usuario);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<Equipamento> getEquipamentos() {
@@ -122,7 +134,8 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva{" +
-                "usuario=" + usuario +
+                "id=" + id +
+                ", usuario=" + usuario +
                 ", equipamentos=" + equipamentos +
                 ", sala=" + sala +
                 ", tipo='" + tipo + '\'' +

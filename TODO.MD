@@ -22,7 +22,7 @@
 
 4. Reserva
 
-    - [ ] Reserva
+    - [x] Reserva
     - [ ] ReservaModel
     - [ ] ReservaModelTest
 
@@ -42,7 +42,7 @@
 
     - [x] Funcionario
     - [x] FuncionarioModel
-    - [ ] FuncionarioModelTest
+    - [x] FuncionarioModelTest
 
 8. Usuario
     * Adicionado o atributo id.
@@ -54,3 +54,4 @@
 1. Revisar todos os models e verificar se `` private Integer id = 0;``
 2. Refatorar métodos do Model na próxima iteração
 3. Todas as classes Model devem implementar a interface IMetodos
+4. A sala deve conhecer sua reservas

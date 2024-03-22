@@ -24,7 +24,7 @@ public class Reserva {
     private Boolean ativo = false;
 
     public Reserva() {
-        this.equipamentos = new ArrayList<Equipamento>();
+        this.equipamentos = new ArrayList<>();
     }
 
     public Reserva(LocalDate dataAlocacao, LocalTime horaInicio, LocalTime horaFim, String assunto, Usuario usuario, Sala sala, String tipo) {

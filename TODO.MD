@@ -40,8 +40,8 @@
 
 7. Funcionario
 
-    - [ ] Funcionario
-    - [ ] FuncionarioModel
+    - [x] Funcionario
+    - [x] FuncionarioModel
     - [ ] FuncionarioModelTest
 
 8. Usuario
@@ -49,5 +49,8 @@
 
 ## Anotações:
 
+#### Para a próxima iteração:
+
 1. Revisar todos os models e verificar se `` private Integer id = 0;``
 2. Refatorar métodos do Model na próxima iteração
+3. Todas as classes Model devem implementar a interface IMetodos

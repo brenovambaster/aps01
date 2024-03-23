@@ -13,6 +13,8 @@ import entidades.usuario.Usuario;
  */
 public class Funcionario extends Usuario {
 
+    public Funcionario() {
+    }
 
     public Funcionario(String nome, String cargo, String ramal, Campus campus) {
         super(nome, cargo, ramal, campus);

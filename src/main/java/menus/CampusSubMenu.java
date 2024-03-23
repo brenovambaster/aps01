@@ -10,9 +10,8 @@ public class CampusSubMenu {
     String nomeCampus;
     String enderecoCampus;
     String opcao;
-    CampusModel campusModel;
+    CampusModel campusModel = new CampusModel();;
     public void CampusSubMenu(){
-        this.campusModel = new CampusModel();
         this.nomeCampus = "";
         this.enderecoCampus = "";
         this.opcao = "";
@@ -74,7 +73,7 @@ public class CampusSubMenu {
         System.out.println("Digite o endereço do Campus: ");
         enderecoCampus = scanner.nextLine();
         campus.setEndereco(enderecoCampus);
-        campusModel.create(campus);
+        this.campusModel.create(campus);
         clearAtributos();
     }
 
@@ -94,11 +93,13 @@ public class CampusSubMenu {
         String enderecoCampus;
         Scanner scanner = new Scanner(System.in);
 
+        listarCampus();
+
         System.out.println("Digite o id do Campus a ser atualizado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
 
-        campus = campusModel.get(idCampus);
+        campus = this.campusModel.get(idCampus);
 
         System.out.println("Digite o novo nome do Campus: ");
         nomeCampus = scanner.nextLine();
@@ -107,7 +108,7 @@ public class CampusSubMenu {
         enderecoCampus = scanner.nextLine();
         campus.setEndereco(enderecoCampus);
 
-        campusModel.update(campus);
+        this.campusModel.update(campus);
         clearAtributos();
         System.out.println("Campus atualizado com sucesso!");
     }
@@ -119,13 +120,15 @@ public class CampusSubMenu {
         Integer idCampus;
         Scanner scanner = new Scanner(System.in);
 
+        listarCampus();
+
         System.out.println("Digite o id do Campus a ser deletado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
 
-        campus = campusModel.get(idCampus);
+        campus = this.campusModel.get(idCampus);
 
-        campusModel.remove(campus);
+        this.campusModel.remove(campus);
         clearAtributos();
         System.out.println("Campus deletado com sucesso!");
     }

@@ -11,6 +11,9 @@ public class Predio {
     private Campus campus;
     private  Integer id;
 
+    public Predio() {
+
+    }
     public Predio(String nome, Campus campus) {
         this.nome = nome;
         this.campus = campus;

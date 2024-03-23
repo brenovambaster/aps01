@@ -3,10 +3,13 @@
  ******************************************************************************/
 
 package entidades.reserva;
+
 import entidades.sala.Sala;
 import entidades.usuario.Usuario;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 import entidades.equipamento.Equipamento;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.List;
 
 //TODO: REVISAR TODA ESSA CLASSE, BEM COMO OS TESTES
 public class Reserva {
+    private Integer id;
     private Usuario usuario;
     private final List<Equipamento> equipamentos;
     private Sala sala;
@@ -24,7 +28,7 @@ public class Reserva {
     private Boolean ativo = false;
 
     public Reserva() {
-        this.equipamentos = new ArrayList<Equipamento>();
+        this.equipamentos = new ArrayList<>();
     }
 
     public Reserva(LocalDate dataAlocacao, LocalTime horaInicio, LocalTime horaFim, String assunto, Usuario usuario, Sala sala, String tipo) {
@@ -36,6 +40,27 @@ public class Reserva {
         this.setHoraFim(horaFim);
         this.setAssunto(assunto);
         this.setUsuario(usuario);
+    }
+
+    /**
+     * Recebe uma lista de equipamentos e adiciona essa lista a Reserva.
+     * Esse método é diferente do método addEquipamento. O método addEquipamento
+     * adiciona um equipamento por vez.
+     *
+     * @param equipamentos
+     * @see Reserva#addEquipamento(Equipamento)
+     */
+    public void setEquipamentos(List<Equipamento> equipamentos) {
+        this.equipamentos.clear();
+        this.equipamentos.addAll(equipamentos);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<Equipamento> getEquipamentos() {
@@ -102,6 +127,11 @@ public class Reserva {
         this.usuario = usuario;
     }
 
+    /**
+     * Adiciona um equipamento por vez à lista de equipamentos da Reserva.
+     *
+     * @param equipamento
+     */
     public void addEquipamento(Equipamento equipamento) {
 
         this.equipamentos.add(equipamento);
@@ -122,7 +152,8 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva{" +
-                "usuario=" + usuario +
+                "id=" + id +
+                ", usuario=" + usuario +
                 ", equipamentos=" + equipamentos +
                 ", sala=" + sala +
                 ", tipo='" + tipo + '\'' +

@@ -23,30 +23,36 @@ class PredioModelTest {
 
     @Test
     void create() {
-        predioModel.create(new Predio("Predio 2", null));
-        assertEquals(1, predioModel.getAll().size());
+        Predio predio = new Predio("Predio 1", null);
+        predio.setId(predioModel.create(predio));
+        assertEquals(predio, predioModel.get(predio.getId()));
     }
 
     @Test
     void remove() {
-        predioModel.create(new Predio("Predio 1", null));
-        predioModel.remove(new Predio("Predio 1", null));
+        Predio p = new Predio("Predio 1", null);
+        p.setId(predioModel.create(p));
+        predioModel.remove(p);
+        assertEquals(null, predioModel.get(p.getId()));
     }
 
+    // TODO: Fix this test
     @Test
     void update() {
         Predio predio = new Predio("Predio 1", null);
         predioModel.create(predio);
         predio.setNome("Predio Dois");
         predioModel.update(predio);
+//        assertEquals(0, predioModel.getAll().size());
         assertEquals("Predio Dois", predioModel.get(0).getNome());
     }
+
 
     @Test
     void get() {
         Predio predio = new Predio("Predio 1", null);
-        predioModel.create(predio);
-        assertEquals(predio, predioModel.get(0));
+        predio.setId(predioModel.create(predio));
+        assertEquals(predio, predioModel.get(predio.getId()));
     }
 
     @Test

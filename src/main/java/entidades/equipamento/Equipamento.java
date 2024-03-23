@@ -4,17 +4,34 @@
 
 package entidades.equipamento;
 
+/**
+ * Classe que representa um equipamento
+ *
+ * @attribute {@code String nome}
+ * @attribute {@code String patrimonio}
+ * @attribute {@code Integer id}
+ */
 public class Equipamento {
     private String nome;
     private String patrimonio;
+    private Integer id;
 
     public Equipamento() {
         this.nome = null;
         this.patrimonio = null;
     }
+
     public Equipamento(String nome, String patrimonio) {
         this.nome = nome;
         this.patrimonio = patrimonio;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -38,6 +55,7 @@ public class Equipamento {
         return "Equipamento{" +
                 "nome='" + nome + '\'' +
                 ", patrimonio='" + patrimonio + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

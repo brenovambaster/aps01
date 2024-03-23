@@ -28,8 +28,8 @@ class CampusModelTest {
     @Test
     void create() {
         Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        assertEquals(1, campusModel.getAll().size());
+        campus.setId(campusModel.create(campus));
+        assertEquals(0, campusModel.get(0).getId());
     }
 
     @Test

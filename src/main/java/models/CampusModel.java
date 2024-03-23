@@ -10,27 +10,60 @@ import java.util.ArrayList;
 
 public class CampusModel {
     private ArrayList<Campus> campusList = new ArrayList<>();
+    private Integer id = 0;
 
     public CampusModel() {
 
     }
 
-    public void create(Campus campus) {
+    /**
+     * @param campus
+     * @return ID of the created campus
+     */
+    public Integer create(Campus campus) {
+        campus.setId(id);
         campusList.add(campus);
+        return id++;
     }
 
     public void remove(Campus campus) {
-        campusList.remove(campus);
+        for (Campus c : campusList) {
+            if (c.getId().equals(campus.getId())) {
+                campusList.remove(c);
+                break;
+            }
+        }
     }
 
     public void update(Campus campus) {
-        campusList.set(campusList.indexOf(campus), campus);
+        for (Campus c : campusList) {
+            if (c.getId().equals(campus.getId())) {
+                c.setNome(campus.getNome());
+                c.setEndereco(campus.getEndereco());
+                break;
+            }
+        }
     }
 
-    public Campus get(int index) {
-        return campusList.get(index);
+    /**
+     * @param id This is the index of the Campus object in the campusList ArrayList.
+     * @return Campus object  | NULL
+     * @sumaary Return campus if found, else return null
+     * @see Campus
+     */
+    public Campus get(int id) {
+        for (Campus c : campusList) {
+            if (c.getId().equals(id)) {
+                return c;
+            }
+        }
+        return null;
     }
 
+    /**
+     * @return ArrayList<Campus>
+     * @brief Get all Campus objects
+     */
     public ArrayList<Campus> getAll() {
         return campusList;
     }

@@ -1,7 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2024. @author: Breno Vambaster
- ******************************************************************************/
-
 package models;
 
 import entidades.campus.Campus;
@@ -9,62 +5,33 @@ import entidades.campus.Campus;
 import java.util.ArrayList;
 
 public class CampusModel {
-    private ArrayList<Campus> campusList = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Campus> campusList = new ArrayList<>();
+    private static Integer id = 0;
 
-    public CampusModel() {
-
-    }
-
-    /**
-     * @param campus
-     * @return ID of the created campus
-     */
-    public Integer create(Campus campus) {
+    public static Integer create(Campus campus) {
         campus.setId(id);
         campusList.add(campus);
         return id++;
     }
 
-    public void remove(Campus campus) {
-        for (Campus c : campusList) {
-            if (c.getId().equals(campus.getId())) {
-                campusList.remove(c);
+    public static void remove(Campus campus) {
+        campusList.removeIf(c -> c.getId().equals(campus.getId()));
+    }
+
+    public static void update(Campus campus) {
+        for (int i = 0; i < campusList.size(); i++) {
+            if (campusList.get(i).getId().equals(campus.getId())) {
+                campusList.set(i, campus);
                 break;
             }
         }
     }
 
-    public void update(Campus campus) {
-        for (Campus c : campusList) {
-            if (c.getId().equals(campus.getId())) {
-                c.setNome(campus.getNome());
-                c.setEndereco(campus.getEndereco());
-                break;
-            }
-        }
+    public static Campus get(int id) {
+        return campusList.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
     }
 
-    /**
-     * @param id This is the index of the Campus object in the campusList ArrayList.
-     * @return Campus object  | NULL
-     * @sumaary Return campus if found, else return null
-     * @see Campus
-     */
-    public Campus get(int id) {
-        for (Campus c : campusList) {
-            if (c.getId().equals(id)) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @return ArrayList<Campus>
-     * @brief Get all Campus objects
-     */
-    public ArrayList<Campus> getAll() {
+    public static ArrayList<Campus> getAll() {
         return campusList;
     }
 }

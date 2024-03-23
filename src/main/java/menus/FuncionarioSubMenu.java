@@ -73,18 +73,17 @@ public class FuncionarioSubMenu {
         String ramal;
         String input;
         Integer idCampus;
-        CampusModel campusModel = new CampusModel();
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : campusModel.getAll()) {
+        for (Campus c : CampusModel.getAll()) {
             System.out.println(c.toString());
         }
         System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = campusModel.get(idCampus);
+        campus = CampusModel.get(idCampus);
 
         funcionario.setCampus(campus);
 
@@ -132,13 +131,13 @@ public class FuncionarioSubMenu {
         funcionario = this.funcionarioModel.get(idFuncionario);
 
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : campusModel.getAll()) {
+        for (Campus c : CampusModel.getAll()) {
             System.out.println(c.toString());
         }
         System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = campusModel.get(idCampus);
+        campus = CampusModel.get(idCampus);
         funcionario.setCampus(campus);
 
         System.out.println("Digite o nome do Funcionario: ");

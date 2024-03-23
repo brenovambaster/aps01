@@ -68,9 +68,8 @@ public class PredioSubMenu {
         }
     }
     public void listarCampus(){
-        CampusModel campusModel = new CampusModel();
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : campusModel.getAll()) {
+        for (Campus c : CampusModel.getAll()) {
             System.out.println(c.toString());
         }
     }
@@ -78,7 +77,6 @@ public class PredioSubMenu {
 
         Scanner scanner = new Scanner(System.in);
         Campus campus = new Campus();
-        CampusModel campusModel = new CampusModel();
         Predio predio = new Predio();
         String input;
         Integer idCampus;
@@ -87,7 +85,7 @@ public class PredioSubMenu {
         System.out.println("Digite o id do campus que sera vinculado ao predio: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = campusModel.get(idCampus);
+        campus = CampusModel.get(idCampus);
         predio.setCampus(campus);
 
         System.out.println("Digite o nome do predio: ");

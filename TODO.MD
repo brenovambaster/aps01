@@ -52,6 +52,7 @@
 #### Para a próxima iteração:
 
 0. Olhar todos os TO-DO's do código
+1. Criar construtores padrões para todas as classes (model e afins)
 1. Revisar todos os models e verificar se `` private Integer id = 0;``
 2. Refatorar métodos do Model na próxima iteração
 3. Todas as classes Model devem implementar a interface IMetodos

@@ -1,6 +1,7 @@
 package models;
 
 import entidades.equipamento.Equipamento;
+import helpers.HelperUtil;
 import interfaces.IMetodos;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.ArrayList;
  * Classe que representa o modelo de Equipamento
  */
 public class EquipamentoModel implements IMetodos<Equipamento> {
-    private ArrayList<Equipamento> equipamentos = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Equipamento> equipamentos = new ArrayList<>();
+    private static Integer id = 0;
 
     /**
      * Cria um novo equipamento e adiciona à lista
@@ -20,11 +21,12 @@ public class EquipamentoModel implements IMetodos<Equipamento> {
      */
     @Override
     public Integer create(Equipamento equipamento) {
+        HelperUtil.validateObject(equipamento);
+
         equipamento.setId(id);
         equipamentos.add(equipamento);
         return id++;
     }
-
 
     /**
      * Remove um equipamento da lista
@@ -33,6 +35,8 @@ public class EquipamentoModel implements IMetodos<Equipamento> {
      */
     @Override
     public void remove(Equipamento equipamento) {
+        HelperUtil.validateObject(equipamento);
+
         equipamentos.removeIf(e -> e.getId().equals(equipamento.getId()));
     }
 
@@ -43,14 +47,17 @@ public class EquipamentoModel implements IMetodos<Equipamento> {
      * @param equipamento O equipamento com os dados atualizados
      */
     @Override
-    public void update(Equipamento equipamento) {
+    public Boolean update(Equipamento equipamento) {
+        HelperUtil.validateObject(equipamento);
+
         for (Equipamento e : equipamentos) {
             if (e.getId().equals(equipamento.getId())) {
                 e.setNome(equipamento.getNome());
                 e.setPatrimonio(equipamento.getPatrimonio());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
 

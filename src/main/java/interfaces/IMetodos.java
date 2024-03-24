@@ -11,7 +11,7 @@ public interface IMetodos<T> {
 
     void remove(T object);
 
-    void update(T object);
+    Boolean update(T object);
 
     T get(int id);
 

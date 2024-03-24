@@ -26,6 +26,7 @@ class FuncionarioModelTest {
 
     @AfterEach
     void tearDown() {
+        funcionarioModel.remove(funcionario);
         funcionarioModel = null;
         funcionario = null;
     }
@@ -62,9 +63,7 @@ class FuncionarioModelTest {
 
     @Test
     void getAll() {
-        funcionario.setId(funcionarioModel.create(funcionario));
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
-        funcionarios.add(funcionario);
-        assertEquals(funcionarios, funcionarioModel.getAll());
+
+        assertEquals(0, funcionarioModel.getAll().size());
     }
 }

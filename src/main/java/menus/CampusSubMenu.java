@@ -3,24 +3,27 @@
  ******************************************************************************/
 
 package menus;
+
 import entidades.campus.Campus;
 import models.CampusModel;
+
 import java.util.Scanner;
+
 public class CampusSubMenu {
     String nomeCampus;
     String enderecoCampus;
     String opcao;
-    CampusModel campusModel;
-    public void CampusSubMenu(){
-        this.campusModel = new CampusModel();
+    CampusModel campusModel = new CampusModel();
+
+    public void CampusSubMenu() {
         this.nomeCampus = "";
         this.enderecoCampus = "";
         this.opcao = "";
     }
-    public void campusMenu(){
 
-        while(true)
-        {
+    public void campusMenu() {
+
+        while (true) {
             System.out.println("Campus Submenu");
             System.out.println("Digite a opção desejada: ");
             System.out.println("1 - Cadastrar Campus");
@@ -32,8 +35,7 @@ public class CampusSubMenu {
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
 
-            switch(opcao)
-            {
+            switch (opcao) {
                 case "1":
                     cadastrarCampus();
                     break;
@@ -56,13 +58,13 @@ public class CampusSubMenu {
 
     }
 
-    public void clearAtributos(){
+    public void clearAtributos() {
         this.nomeCampus = null;
         this.enderecoCampus = null;
-        this.opcao =null;
+        this.opcao = null;
     }
 
-    public void cadastrarCampus(){
+    public void cadastrarCampus() {
         Campus campus = new Campus();
         String nomeCampus;
         String enderecoCampus;
@@ -94,6 +96,8 @@ public class CampusSubMenu {
         String enderecoCampus;
         Scanner scanner = new Scanner(System.in);
 
+        listarCampus();
+
         System.out.println("Digite o id do Campus a ser atualizado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
@@ -112,20 +116,22 @@ public class CampusSubMenu {
         System.out.println("Campus atualizado com sucesso!");
     }
 
-    public void deletaCampus(){
+    public void deletaCampus() {
 
         Campus campus = new Campus();
         String input;
         Integer idCampus;
         Scanner scanner = new Scanner(System.in);
 
+        listarCampus();
+
         System.out.println("Digite o id do Campus a ser deletado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
 
-        campus = campusModel.get(idCampus);
+        campus = this.campusModel.get(idCampus);
 
-        campusModel.remove(campus);
+        this.campusModel.remove(campus);
         clearAtributos();
         System.out.println("Campus deletado com sucesso!");
     }

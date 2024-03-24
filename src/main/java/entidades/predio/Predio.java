@@ -9,7 +9,11 @@ import entidades.campus.Campus;
 public class Predio {
     private String nome;
     private Campus campus;
-    private  Integer id;
+    private Integer id;
+
+    public Predio() {
+
+    }
 
     public Predio(String nome, Campus campus) {
         this.nome = nome;
@@ -38,5 +42,14 @@ public class Predio {
 
     public void setCampus(Campus campus) {
         this.campus = campus;
+    }
+
+    @Override
+    public String toString() {
+        return "Predio{" +
+                "nome='" + nome + '\'' +
+                ", campus=" + campus +
+                ", id=" + id +
+                '}';
     }
 }

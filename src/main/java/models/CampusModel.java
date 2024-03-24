@@ -5,12 +5,14 @@
 package models;
 
 import entidades.campus.Campus;
+import helpers.HelperUtil;
+import interfaces.IMetodos;
 
 import java.util.ArrayList;
 
-public class CampusModel {
-    private ArrayList<Campus> campusList = new ArrayList<>();
-    private Integer id = 0;
+public class CampusModel implements IMetodos<Campus> {
+    private static ArrayList<Campus> campusList = new ArrayList<>();
+    private static Integer id = 0;
 
     public CampusModel() {
 
@@ -20,44 +22,44 @@ public class CampusModel {
      * @param campus
      * @return ID of the created campus
      */
-    public Integer create(Campus campus) {
+    public Integer create(Campus campus) throws IllegalArgumentException {
+        HelperUtil.<Campus>validateObject(campus);
+
         campus.setId(id);
         campusList.add(campus);
         return id++;
     }
 
-    public void remove(Campus campus) {
-        for (Campus c : campusList) {
-            if (c.getId().equals(campus.getId())) {
-                campusList.remove(c);
-                break;
-            }
-        }
+    public void remove(Campus campus) throws IllegalArgumentException {
+        HelperUtil.validateObject(campus);
+
+        campusList.removeIf(c -> c.getId().equals(campus.getId()));
     }
 
-    public void update(Campus campus) {
+    public Boolean update(Campus campus) throws IllegalArgumentException {
+        HelperUtil.validateObject(campus);
+
         for (Campus c : campusList) {
             if (c.getId().equals(campus.getId())) {
                 c.setNome(campus.getNome());
                 c.setEndereco(campus.getEndereco());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     /**
      * @param id This is the index of the Campus object in the campusList ArrayList.
-     * @return Campus object  | NULL
+     * @return Campus object  | null
      * @sumaary Return campus if found, else return null
      * @see Campus
      */
     public Campus get(int id) {
-        for (Campus c : campusList) {
-            if (c.getId().equals(id)) {
-                return c;
-            }
-        }
-        return null;
+        return campusList.stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     /**

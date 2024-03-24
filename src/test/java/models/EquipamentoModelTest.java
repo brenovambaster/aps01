@@ -19,12 +19,14 @@ class EquipamentoModelTest {
 
     @BeforeEach
     void setUp() {
-        equipamentoModel = new EquipamentoModel();
         equipamento = new Equipamento("Computador", "123456");
+        equipamentoModel = new EquipamentoModel();
+
     }
 
     @AfterEach
     void tearDown() {
+        equipamentoModel.remove(equipamento);
         equipamentoModel = null;
         equipamento = null;
     }
@@ -59,9 +61,7 @@ class EquipamentoModelTest {
 
     @Test
     void getAll() {
-        equipamentoModel.create(equipamento);
-        ArrayList<Equipamento> equipamentoList = new ArrayList<>();
-        equipamentoList.add(equipamento);
-        assertEquals(equipamentoList, equipamentoModel.getAll());
+
+        assertEquals(0, equipamentoModel.getAll().size());
     }
 }

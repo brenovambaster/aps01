@@ -7,22 +7,27 @@ package models;
 import java.util.ArrayList;
 
 import entidades.predio.Predio;
+import helpers.HelperUtil;
 
 public class PredioModel {
-    private ArrayList<Predio> predioList = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Predio> predioList = new ArrayList<>();
+    private static Integer id = 0;
 
     public PredioModel() {
 
     }
 
     public Integer create(Predio predio) {
+        HelperUtil.validateObject(predio);
+
         predio.setId(id);
         predioList.add(predio);
         return id++;
     }
 
     public void remove(Predio predio) {
+        HelperUtil.validateObject(predio);
+
         for (Predio p : predioList) {
             if (p.getId().equals(predio.getId())) {
                 predioList.remove(p);
@@ -33,6 +38,7 @@ public class PredioModel {
 
     //TODO: Encontrar outra forma de fazer o update. Se Predio ter mais atributos o código ficará muito grande.
     public void update(Predio predio) {
+        HelperUtil.validateObject(predio);
 
         for (Predio p : predioList) {
             if (p.getId().equals(predio.getId())) {

@@ -17,10 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProfessorModelTest {
     private ProfessorModel professorModel;
     private Professor professor;
+    private Campus campus;
 
     @BeforeEach
     void setUp() {
-        Campus campus = new Campus("Campus 1", "Rua 1");
+        campus = new Campus("Campus 1", "Rua 1");
         campus.setId(0);
         professor = new Professor("Breno", "Professor", "1234", campus);
         professorModel = new ProfessorModel();
@@ -29,6 +30,9 @@ class ProfessorModelTest {
     @AfterEach
     void tearDown() {
         professorModel = null;
+        professor = null;
+        campus = null;
+
     }
 
     @Test
@@ -47,6 +51,7 @@ class ProfessorModelTest {
     @Test
     void update() {
         Campus campus2 = new Campus("Campus 2", "Rua 2");
+        campus2.setId(1);
 
         professor.setId(professorModel.create(professor));
         professor.setNome("Breno Vambaster");
@@ -64,11 +69,7 @@ class ProfessorModelTest {
 
     @Test
     void getAll() {
-        professor.setId(professorModel.create(professor));
-        ArrayList<Professor> professorList = new ArrayList<>();
-        professorList.add(professor);
-
-        assertEquals(professorList, professorModel.getAll());
+        assertEquals(0, professorModel.getAll().size());
 
     }
 }

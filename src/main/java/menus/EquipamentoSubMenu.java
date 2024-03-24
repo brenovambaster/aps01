@@ -16,7 +16,7 @@ public class EquipamentoSubMenu {
 
     String opcao;
 
-    EquipamentoModel equipamentoModel;
+    EquipamentoModel equipamentoModel = new EquipamentoModel();
     public EquipamentoSubMenu() {
         this.nomeEquipamento = "";
         this.patrimonio = "";
@@ -64,7 +64,7 @@ public class EquipamentoSubMenu {
         this.opcao =null;
     }
 
-    public void cadastrarCampus(){
+    public void cadastrarEquipamento(){
         Equipamento equipamento = new Equipamento();
         String nomeEquipamento;
         String patrimonio;
@@ -77,8 +77,61 @@ public class EquipamentoSubMenu {
         System.out.println("Digite o patrimonio do Equipamento: ");
         patrimonio = scanner.nextLine();
         equipamento.setPatrimonio(patrimonio);
-        equipamentoModel.create(equipamento);
+        this.equipamentoModel.create(equipamento);
         clearAtributos();
     }
 
+    public void listarEquipamentos(){
+        System.out.println("Listando equipamentos:");
+        for(Equipamento equipamento : this.equipamentoModel.getAll()){
+            System.out.println(equipamento);
+        }
+        clearAtributos();
+    }
+
+    public void atualizarEquipamentos(){
+        Equipamento equipamento = new Equipamento();
+        String nomeEquipamento;
+        String patrimonio;
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        Integer idEquipamento;
+
+        listarEquipamentos();
+
+        System.out.println("Digite o id do Equipamento a ser atualizado: ");
+        input = scanner.nextLine();
+        idEquipamento = Integer.parseInt(input);
+
+        equipamento = this.equipamentoModel.get(idEquipamento);
+
+        System.out.println("Digite o nome do Equipamento: ");
+        nomeEquipamento = scanner.nextLine();
+        equipamento.setNome(nomeEquipamento);
+
+        System.out.println("Digite o patrimonio do Equipamento: ");
+        patrimonio = scanner.nextLine();
+        equipamento.setPatrimonio(patrimonio);
+
+        this.equipamentoModel.update(equipamento);
+        clearAtributos();
+    }
+
+    public void deletaEquipamentos(){
+        Equipamento equipamento = new Equipamento();
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        Integer idEquipamento;
+
+        listarEquipamentos();
+
+        System.out.println("Digite o id do Equipamento a ser deletado: ");
+        input = scanner.nextLine();
+        idEquipamento = Integer.parseInt(input);
+
+        equipamento = this.equipamentoModel.get(idEquipamento);
+        this.equipamentoModel.remove(equipamento);
+        clearAtributos();
+        System.out.println("Equipamento deletado com sucesso!");
+    }
 }

@@ -4,14 +4,16 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
+.idea/copilot/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-.idea/copilot/
 *.iws
 *.iml
 *.ipr
+*.xd
+*.lck
 
 ### Eclipse ###
 .apt_generated

@@ -71,4 +71,15 @@ public abstract class Usuario {
     public void setCampus(Campus campus) {
         this.campus = campus;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", ramal='" + ramal + '\'' +
+                ", campus=" + campus +
+                '}';
+    }
 }

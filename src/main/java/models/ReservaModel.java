@@ -5,15 +5,18 @@
 package models;
 
 import entidades.reserva.Reserva;
+import helpers.HelperUtil;
 import interfaces.IMetodos;
 
 import java.util.ArrayList;
 
-import Helpers.ReservaHelper;
+import helpers.ReservaHelper;
+
+import javax.swing.text.html.HTMLEditorKit;
 
 public class ReservaModel implements IMetodos<Reserva> {
-    private ArrayList<Reserva> reservasList = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Reserva> reservasList = new ArrayList<>();
+    private static Integer id = 0;
 
     /**
      * @param reserva
@@ -21,8 +24,8 @@ public class ReservaModel implements IMetodos<Reserva> {
      */
     @Override
     public Integer create(Reserva reserva) {
-        if (id == null || id > 0)
-            throw new RuntimeException("Reserva já existe!");
+        HelperUtil.validateObject(reserva);
+
         if (ReservaHelper.ConflitaHorario(this.reservasList, reserva))
             throw new RuntimeException("Conflito de horário!");
 
@@ -36,6 +39,8 @@ public class ReservaModel implements IMetodos<Reserva> {
      */
     @Override
     public void remove(Reserva reserva) {
+        HelperUtil.validateObject(reserva);
+
         reservasList.removeIf(r -> r.getId().equals(reserva.getId()));
     }
 
@@ -43,7 +48,9 @@ public class ReservaModel implements IMetodos<Reserva> {
      * @param reserva
      */
     @Override
-    public void update(Reserva reserva) {
+    public Boolean update(Reserva reserva) {
+        HelperUtil.validateObject(reserva);
+
         for (Reserva r : reservasList) {
             if (r.getId().equals(reserva.getId())) {
                 r.setEquipamentos(reserva.getEquipamentos());
@@ -56,9 +63,10 @@ public class ReservaModel implements IMetodos<Reserva> {
                 r.setHoraFim(reserva.getHoraFim());
                 r.setAssunto(reserva.getAssunto());
                 r.setAtivo(reserva.isAtivo());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     /**

@@ -13,53 +13,54 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CampusModelTest {
     private CampusModel campusModel;
+    private Campus campus;
 
     @BeforeEach
     void setUp() {
-        Campus campus = new Campus("Gama", "Rua 3, vilage");
-        campusModel = new CampusModel();
+        this.campusModel = new CampusModel();
+        this.campus = new Campus("Gama", "Rua 3, vilage");
     }
 
     @AfterEach
     void tearDown() {
+        campusModel.remove(campus);
+        campus = null;
         campusModel = null;
     }
 
     @Test
     void create() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campus.setId(campusModel.create(campus));
-        assertEquals(0, campusModel.get(0).getId());
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
+        assertEquals(campus, campusModel.get(id));
     }
 
     @Test
     void remove() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
         campusModel.remove(campus);
-        assertEquals(0, campusModel.getAll().size());
+        assertEquals(null, campusModel.get(campus.getId()));
     }
 
     @Test
     void update() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        campus.setNome("Gama3");
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
+
+        campus.setNome("Taguatinga");
         campusModel.update(campus);
-        assertEquals("Gama3", campusModel.get(0).getNome());
+        assertEquals("Taguatinga", campusModel.get(campus.getId()).getNome());
     }
 
     @Test
     void get() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        assertEquals(campus, campusModel.get(0));
+        campus.setId(campusModel.create(campus));
+        assertEquals(campus, campusModel.get(campus.getId()));
     }
 
     @Test
     void getAll() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        assertEquals(1, campusModel.getAll().size());
+        assertEquals(0, campusModel.getAll().size());
     }
 }

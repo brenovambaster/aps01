@@ -9,7 +9,7 @@ import interfaces.IMetodos;
 
 import java.util.ArrayList;
 
-import Helpers.ReservaHelper;
+import helpers.ReservaHelper;
 
 public class ReservaModel implements IMetodos<Reserva> {
     private ArrayList<Reserva> reservasList = new ArrayList<>();

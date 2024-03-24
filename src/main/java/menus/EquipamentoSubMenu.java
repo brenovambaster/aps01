@@ -38,16 +38,16 @@ public class EquipamentoSubMenu {
 
             switch(opcao) {
                 case "1":
-                    cadastrarEquipamento();
+                    //cadastrarEquipamento();
                     break;
                 case "2":
-                    listarEquipamentos();
+                   // listarEquipamentos();
                     break;
                 case "3":
-                    atualizarEquipamentos();
+                  //  atualizarEquipamentos();
                     break;
                 case "4":
-                    deletaEquipamentos();
+                   // deletaEquipamentos();
                     break;
                 case "5":
                     return;

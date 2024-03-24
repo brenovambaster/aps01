@@ -13,53 +13,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CampusModelTest {
     private CampusModel campusModel;
+    private Campus campus;
 
     @BeforeEach
     void setUp() {
-        Campus campus = new Campus("Gama", "Rua 3, vilage");
-        campusModel = new CampusModel();
+        this.campus = new Campus("Gama", "Rua 3, vilage");
+
     }
 
     @AfterEach
     void tearDown() {
-        campusModel = null;
+        campusModel.remove(campus);
     }
 
     @Test
     void create() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campus.setId(campusModel.create(campus));
-        assertEquals(0, campusModel.get(0).getId());
+        Integer id = CampusModel.create(campus);
+        campus.setId(id);
+        assertEquals(campus, CampusModel.get(id));
     }
 
     @Test
     void remove() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        campusModel.remove(campus);
-        assertEquals(0, campusModel.getAll().size());
+        Integer id = CampusModel.create(campus);
+        campus.setId(id);
+        CampusModel.remove(campus);
+        assertEquals(null, CampusModel.get(campus.getId()));
     }
 
     @Test
     void update() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
+
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
         campus.setNome("Gama3");
-        campusModel.update(campus);
-        assertEquals("Gama3", campusModel.get(0).getNome());
+        CampusModel.update(campus);
+        assertEquals("Gama3", campusModel.get(id).getNome());
     }
 
     @Test
     void get() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
-        assertEquals(campus, campusModel.get(0));
+        Integer id = CampusModel.create(campus);
+        assertEquals(campus, campusModel.get(id));
     }
 
     @Test
     void getAll() {
-        Campus campus = new Campus("Gama2", "Rua 3, vilage");
-        campusModel.create(campus);
+        CampusModel.create(campus);
         assertEquals(1, campusModel.getAll().size());
     }
 }

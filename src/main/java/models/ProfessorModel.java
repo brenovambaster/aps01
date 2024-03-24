@@ -4,6 +4,7 @@
 
 package models;
 
+import helpers.HelperUtil;
 import interfaces.IMetodos;
 import entidades.professor.Professor;
 
@@ -19,18 +20,22 @@ public class ProfessorModel implements IMetodos<Professor> {
      */
     @Override
     public Integer create(Professor professor) {
+        HelperUtil.validateObject(professor);
+
         professor.setId(id);
         professorList.add(professor);
         return id++;
     }
 
     /**
-     * @param object
+     * @param professor
      */
     @Override
-    public void remove(Professor object) {
+    public void remove(Professor professor) {
+        HelperUtil.validateObject(professor);
+
         for (Professor p : professorList) {
-            if (p.getId().equals(object.getId())) {
+            if (p.getId().equals(professor.getId())) {
                 professorList.remove(p);
                 break;
             }
@@ -38,19 +43,22 @@ public class ProfessorModel implements IMetodos<Professor> {
     }
 
     /**
-     * @param object
+     * @param professor
      */
     @Override
-    public void update(Professor object) {
+    public Boolean update(Professor professor) {
+        HelperUtil.validateObject(professor);
+
         for (Professor p : professorList) {
-            if (p.getId().equals(object.getId())) {
-                p.setNome(object.getNome());
-                p.setCargo(object.getCargo());
-                p.setRamal(object.getRamal());
-                p.setCampus(object.getCampus());
-                break;
+            if (p.getId().equals(professor.getId())) {
+                p.setNome(professor.getNome());
+                p.setCargo(professor.getCargo());
+                p.setRamal(professor.getRamal());
+                p.setCampus(professor.getCampus());
+                return true;
             }
         }
+        return false;
     }
 
     /**

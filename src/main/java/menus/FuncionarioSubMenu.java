@@ -18,7 +18,10 @@ public class FuncionarioSubMenu {
     String opcao;
     Campus campus;
 
+
     FuncionarioModel funcionarioModel = new FuncionarioModel();
+    CampusModel campusModel = new CampusModel();
+
     public FuncionarioSubMenu() {
         this.nome = "";
         this.cargo = "";
@@ -26,8 +29,8 @@ public class FuncionarioSubMenu {
         this.campus = null;
     }
 
-    public void funcionarioMenu(){
-        while(true){
+    public void funcionarioMenu() {
+        while (true) {
             System.out.println("Menu Funcionario");
             System.out.println("1 - Cadastrar Funcionario");
             System.out.println("2 - Listar Funcionarios");
@@ -38,7 +41,7 @@ public class FuncionarioSubMenu {
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
 
-            switch(opcao){
+            switch (opcao) {
                 case "1":
                     cadastrarFuncionario();
                     break;
@@ -59,14 +62,16 @@ public class FuncionarioSubMenu {
             }
         }
     }
-    public void clearAtributos(){
+
+    public void clearAtributos() {
         this.nome = null;
         this.cargo = null;
         this.ramal = null;
         this.campus = null;
-        this.opcao =null;
+        this.opcao = null;
     }
-    public void cadastrarFuncionario(){
+
+    public void cadastrarFuncionario() {
         Funcionario funcionario = new Funcionario();
         String nome;
         String cargo;
@@ -77,13 +82,13 @@ public class FuncionarioSubMenu {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : CampusModel.getAll()) {
+        for (Campus c : campusModel.getAll()) {
             System.out.println(c.toString());
         }
         System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = CampusModel.get(idCampus);
+        campus = campusModel.get(idCampus);
 
         funcionario.setCampus(campus);
 
@@ -103,22 +108,22 @@ public class FuncionarioSubMenu {
         clearAtributos();
     }
 
-    public void listarFuncionarios(){
+    public void listarFuncionarios() {
         System.out.println("Listando todos os Funcionarios:");
         for (Funcionario c : this.funcionarioModel.getAll()) {
             System.out.println(c.toString());
         }
-        clearAtributos();;
+        clearAtributos();
+        ;
     }
 
-    public void atualizarFuncionario(){
+    public void atualizarFuncionario() {
         Funcionario funcionario = new Funcionario();
         String nome;
         String cargo;
         String ramal;
         String input;
         Integer idFuncionario;
-        CampusModel campusModel = new CampusModel();
         Integer idCampus;
 
         Scanner scanner = new Scanner(System.in);
@@ -131,13 +136,13 @@ public class FuncionarioSubMenu {
         funcionario = this.funcionarioModel.get(idFuncionario);
 
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : CampusModel.getAll()) {
+        for (Campus c : campusModel.getAll()) {
             System.out.println(c.toString());
         }
         System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = CampusModel.get(idCampus);
+        campus = campusModel.get(idCampus);
         funcionario.setCampus(campus);
 
         System.out.println("Digite o nome do Funcionario: ");
@@ -156,7 +161,7 @@ public class FuncionarioSubMenu {
         clearAtributos();
     }
 
-    public void deletarFuncionario(){
+    public void deletarFuncionario() {
         Funcionario funcionario = new Funcionario();
         String input;
         Integer idFuncionario;

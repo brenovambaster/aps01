@@ -21,6 +21,9 @@ public class Sala {
     private Integer qtdLugares;
     private Predio predio;
 
+    public Sala() {
+    }
+
     public Sala(Integer numeroSala, Integer qtdLugares, Predio predio) {
         this.numeroSala = numeroSala;
         this.qtdLugares = qtdLugares;

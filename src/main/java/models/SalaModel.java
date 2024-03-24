@@ -5,6 +5,7 @@
 package models;
 
 import entidades.sala.Sala;
+import helpers.HelperUtil;
 
 import java.util.ArrayList;
 
@@ -20,22 +21,28 @@ public class SalaModel {
     private Integer id = 0;
 
     public Integer create(Sala sala) {
+        HelperUtil.validateObject(sala);
+
         sala.setId(id);
         salaList.add(sala);
         return id++;
     }
 
     public void remove(Sala sala) {
-        for (Sala s : salaList) {
-            if (s.getId().equals(sala.getId())) {
-                salaList.remove(s);
-                break;
-            }
+        HelperUtil.validateObject(sala);
+        if (salaList.isEmpty()) {
+            throw new IllegalArgumentException("Não há salas cadastradas");
         }
+        if (get(sala.getId()) == null) {
+            throw new IllegalArgumentException("Sala não encontrada");
+        }
+
+        salaList.removeIf(s -> s.getId().equals(sala.getId()));
     }
 
     //TODO: Revisar essa parte
     public void update(Sala sala) {
+        HelperUtil.validateObject(sala);
 
         for (Sala s : salaList) {
             if (s.getId().equals(sala.getId())) {
@@ -48,8 +55,7 @@ public class SalaModel {
     }
 
     public Sala get(int id) {
-
-        return salaList.get(id);
+        return salaList.stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
     }
 
     public ArrayList<Sala> getAll() {

@@ -17,47 +17,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SalaModelTest {
     private SalaModel salaModel;
+    private Sala sala;
+    private Predio predio;
 
     @BeforeEach
     void setUp() {
-        salaModel = new SalaModel();
 
+        Campus campus = new Campus("Campus 1", "Endereco 1");
+        campus.setId(0);
+        predio = new Predio("Predio 1", campus);
+        predio.setId(0);
+
+        salaModel = new SalaModel();
+        sala = new Sala(1, 100, predio);
     }
 
     @AfterEach
     void tearDown() {
         salaModel = null;
+        sala = null;
+        predio = null;
     }
 
     @Test
     void create() {
-        Campus campus = new Campus("Campus 1", "Endereco 1");
-        campus.setId(1);
-
-        Predio predio = new Predio("Predio 1", campus);
-        predio.setId(1);
-
-        Predio predio2 = new Predio("Predio 2", campus);
-        predio2.setId(2);
-
-        Sala sala = new Sala(1, 100, predio);
-
         sala.setId(salaModel.create(sala));
         assertEquals(sala, salaModel.getAll().get(0));
     }
 
     @Test
     void remove() {
-        Campus campus = new Campus("Campus 1", "Endereco 1");
-        campus.setId(1);
-        Predio predio = new Predio("Predio 1", campus);
-        predio.setId(1);
-
-        Sala sala = new Sala(1, 100, predio);
         sala.setId(salaModel.create(sala));
         salaModel.remove(sala);
 
-        assertEquals(0, salaModel.getAll().size());
+        assertEquals(null, salaModel.get(sala.getId()));
     }
 
     @Test

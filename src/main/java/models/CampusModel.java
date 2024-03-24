@@ -5,11 +5,12 @@
 package models;
 
 import entidades.campus.Campus;
-import helpers.CampusHelper;
+import helpers.HelperUtil;
+import interfaces.IMetodos;
 
 import java.util.ArrayList;
 
-public class CampusModel {
+public class CampusModel implements IMetodos<Campus> {
     private static ArrayList<Campus> campusList = new ArrayList<>();
     private static Integer id = 0;
 
@@ -21,20 +22,23 @@ public class CampusModel {
      * @param campus
      * @return ID of the created campus
      */
-    public static Integer create(Campus campus) throws IllegalArgumentException {
-        CampusHelper.validateCampus(campus);
+    public Integer create(Campus campus) throws IllegalArgumentException {
+        HelperUtil.<Campus>validateObject(campus);
+
         campus.setId(id);
         campusList.add(campus);
         return id++;
     }
 
-    public static void remove(Campus campus) throws IllegalArgumentException {
-        CampusHelper.validateCampus(campus);
+    public void remove(Campus campus) throws IllegalArgumentException {
+        HelperUtil.validateObject(campus);
+
         campusList.removeIf(c -> c.getId().equals(campus.getId()));
     }
 
-    public static Boolean update(Campus campus) throws IllegalArgumentException {
-        CampusHelper.validateCampus(campus);
+    public Boolean update(Campus campus) throws IllegalArgumentException {
+        HelperUtil.validateObject(campus);
+
         for (Campus c : campusList) {
             if (c.getId().equals(campus.getId())) {
                 c.setNome(campus.getNome());
@@ -51,7 +55,7 @@ public class CampusModel {
      * @sumaary Return campus if found, else return null
      * @see Campus
      */
-    public static Campus get(int id) {
+    public Campus get(int id) {
         return campusList.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()
@@ -62,7 +66,7 @@ public class CampusModel {
      * @return ArrayList<Campus>
      * @brief Get all Campus objects
      */
-    public static ArrayList<Campus> getAll() {
+    public ArrayList<Campus> getAll() {
         return campusList;
     }
 }

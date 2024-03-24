@@ -6,12 +6,13 @@ package models;
 
 import entidades.funcionario.Funcionario;
 import interfaces.IMetodos;
+import helpers.HelperUtil;
 
 import java.util.ArrayList;
 
 public class FuncionarioModel implements IMetodos<Funcionario> {
-    private ArrayList<Funcionario> funcionarioList = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Funcionario> funcionarioList = new ArrayList<>();
+    private static Integer id = 0;
 
     /**
      * @param funcionario
@@ -19,6 +20,7 @@ public class FuncionarioModel implements IMetodos<Funcionario> {
      */
     @Override
     public Integer create(Funcionario funcionario) {
+        HelperUtil.validateObject(funcionario);
         funcionario.setId(id);
         funcionarioList.add(funcionario);
         return id++;
@@ -29,6 +31,7 @@ public class FuncionarioModel implements IMetodos<Funcionario> {
      */
     @Override
     public void remove(Funcionario funcionario) {
+        HelperUtil.validateObject(funcionario);
         funcionarioList.removeIf(e -> e.getId().equals(funcionario.getId()));
     }
 
@@ -36,16 +39,18 @@ public class FuncionarioModel implements IMetodos<Funcionario> {
      * @param funcionario
      */
     @Override
-    public void update(Funcionario funcionario) {
+    public Boolean update(Funcionario funcionario) {
+        HelperUtil.validateObject(funcionario);
         for (Funcionario f : funcionarioList) {
             if (f.getId().equals(funcionario.getId())) {
                 f.setNome(funcionario.getNome());
                 f.setCargo(funcionario.getCargo());
                 f.setRamal(funcionario.getRamal());
                 f.setCampus(funcionario.getCampus());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     /**

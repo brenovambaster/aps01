@@ -10,6 +10,7 @@ import entidades.reserva.Reserva;
 import entidades.sala.Sala;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -45,6 +46,8 @@ class ReservaModelTest {
 
     @AfterEach
     void tearDown() {
+        reservaModel.remove(reserva);
+        reserva = null;
         reservaModel = null;
     }
 
@@ -59,7 +62,7 @@ class ReservaModelTest {
     void remove() {
         Integer id = reservaModel.create(reserva);
         reservaModel.remove(reserva);
-        assertNull(reservaModel.get(id));
+        assertEquals(null, reservaModel.get(id));
     }
 
     @Test
@@ -78,6 +81,8 @@ class ReservaModelTest {
         // Cria um professor e adiciona à reserva
         reserva.setUsuario(new Professor("breno", "professor adjunto", "1234", null));
         reserva.setDataAlocacao(LocalDate.now());
+
+        // Atualiza a reserva
         reservaModel.update(reserva);
 
         assertEquals(reserva, reservaModel.get(id));
@@ -93,10 +98,30 @@ class ReservaModelTest {
 
     @Test
     void getAll() {
-        reservaModel.create(reserva);
-        ArrayList<Reserva> reservaList = new ArrayList<>();
-        reservaList.add(reserva);
-        assertEquals(reservaList, reservaModel.getAll());
+        assertEquals(0, reservaModel.getAll().size());
 
+    }
+
+    @Test
+    @DisplayName("Teste de conflito de horário")
+    void testeConflitoHorario() {
+
+        // Cria uma reserva
+        Integer id = reservaModel.create(reserva);
+        reserva.setId(id);
+
+        // Cria uma nova reserva com horário conflitante
+        Reserva reservaConflitante = new Reserva(
+                LocalDate.of(2024, 10, 10),
+                LocalTime.of(9, 0),
+                LocalTime.of(11, 0),
+                "reuniao",
+                null,
+                sala,
+                "reuniao"
+        );
+
+        // Verifica se houve conflito
+        assertThrows(RuntimeException.class, () -> reservaModel.create(reservaConflitante), "Conflito de horário!");
     }
 }

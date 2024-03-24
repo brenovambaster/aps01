@@ -18,13 +18,15 @@ public class PredioSubMenu {
     Campus campus;
 
     PredioModel predioModel = new PredioModel();
+    CampusModel campusModel = new CampusModel();
+
     public PredioSubMenu() {
         this.nome = "";
         this.campus = null;
     }
 
-    public void predioMenu(){
-        while(true){
+    public void predioMenu() {
+        while (true) {
             System.out.println("Menu Predio");
             System.out.println("1 - Cadastrar Predio");
             System.out.println("2 - Listar Predios");
@@ -35,7 +37,7 @@ public class PredioSubMenu {
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
 
-            switch(opcao){
+            switch (opcao) {
                 case "1":
                     cadastrarPredio();
                     break;
@@ -57,23 +59,26 @@ public class PredioSubMenu {
         }
     }
 
-    public void clearAtributos(){
+    public void clearAtributos() {
         this.nome = null;
         this.campus = null;
     }
-    public void listarPredios(){
+
+    public void listarPredios() {
         System.out.println("Predios Cadastrados: ");
         for (Predio p : this.predioModel.getAll()) {
             System.out.println(p.toString());
         }
     }
-    public void listarCampus(){
+
+    public void listarCampus() {
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : CampusModel.getAll()) {
+        for (Campus c : campusModel.getAll()) {
             System.out.println(c.toString());
         }
     }
-    public void cadastrarPredio(){
+
+    public void cadastrarPredio() {
 
         Scanner scanner = new Scanner(System.in);
         Campus campus = new Campus();
@@ -85,7 +90,7 @@ public class PredioSubMenu {
         System.out.println("Digite o id do campus que sera vinculado ao predio: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-        campus = CampusModel.get(idCampus);
+        campus = campusModel.get(idCampus);
         predio.setCampus(campus);
 
         System.out.println("Digite o nome do predio: ");
@@ -95,7 +100,7 @@ public class PredioSubMenu {
         clearAtributos();
     }
 
-    public void atualizarPredio(){
+    public void atualizarPredio() {
         Predio predio = new Predio();
         String nome;
         String input;
@@ -117,7 +122,7 @@ public class PredioSubMenu {
         clearAtributos();
     }
 
-    public void deletarPredio(){
+    public void deletarPredio() {
         Predio predio = new Predio();
         String input;
         Integer idPredio;

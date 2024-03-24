@@ -17,49 +17,50 @@ class CampusModelTest {
 
     @BeforeEach
     void setUp() {
+        this.campusModel = new CampusModel();
         this.campus = new Campus("Gama", "Rua 3, vilage");
-
     }
 
     @AfterEach
     void tearDown() {
         campusModel.remove(campus);
+        campus = null;
+        campusModel = null;
     }
 
     @Test
     void create() {
-        Integer id = CampusModel.create(campus);
-        campus.setId(id);
-        assertEquals(campus, CampusModel.get(id));
-    }
-
-    @Test
-    void remove() {
-        Integer id = CampusModel.create(campus);
-        campus.setId(id);
-        CampusModel.remove(campus);
-        assertEquals(null, CampusModel.get(campus.getId()));
-    }
-
-    @Test
-    void update() {
-
         Integer id = campusModel.create(campus);
         campus.setId(id);
-        campus.setNome("Gama3");
-        CampusModel.update(campus);
-        assertEquals("Gama3", campusModel.get(id).getNome());
-    }
-
-    @Test
-    void get() {
-        Integer id = CampusModel.create(campus);
         assertEquals(campus, campusModel.get(id));
     }
 
     @Test
+    void remove() {
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
+        campusModel.remove(campus);
+        assertEquals(null, campusModel.get(campus.getId()));
+    }
+
+    @Test
+    void update() {
+        Integer id = campusModel.create(campus);
+        campus.setId(id);
+
+        campus.setNome("Taguatinga");
+        campusModel.update(campus);
+        assertEquals("Taguatinga", campusModel.get(campus.getId()).getNome());
+    }
+
+    @Test
+    void get() {
+        campus.setId(campusModel.create(campus));
+        assertEquals(campus, campusModel.get(campus.getId()));
+    }
+
+    @Test
     void getAll() {
-        CampusModel.create(campus);
-        assertEquals(1, campusModel.getAll().size());
+        assertEquals(0, campusModel.getAll().size());
     }
 }

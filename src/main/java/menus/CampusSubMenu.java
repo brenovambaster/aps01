@@ -3,22 +3,27 @@
  ******************************************************************************/
 
 package menus;
+
 import entidades.campus.Campus;
 import models.CampusModel;
+
 import java.util.Scanner;
+
 public class CampusSubMenu {
     String nomeCampus;
     String enderecoCampus;
     String opcao;
-    public void CampusSubMenu(){
+    CampusModel campusModel = new CampusModel();
+
+    public void CampusSubMenu() {
         this.nomeCampus = "";
         this.enderecoCampus = "";
         this.opcao = "";
     }
-    public void campusMenu(){
 
-        while(true)
-        {
+    public void campusMenu() {
+
+        while (true) {
             System.out.println("Campus Submenu");
             System.out.println("Digite a opção desejada: ");
             System.out.println("1 - Cadastrar Campus");
@@ -30,8 +35,7 @@ public class CampusSubMenu {
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
 
-            switch(opcao)
-            {
+            switch (opcao) {
                 case "1":
                     cadastrarCampus();
                     break;
@@ -54,13 +58,13 @@ public class CampusSubMenu {
 
     }
 
-    public void clearAtributos(){
+    public void clearAtributos() {
         this.nomeCampus = null;
         this.enderecoCampus = null;
-        this.opcao =null;
+        this.opcao = null;
     }
 
-    public void cadastrarCampus(){
+    public void cadastrarCampus() {
         Campus campus = new Campus();
         String nomeCampus;
         String enderecoCampus;
@@ -72,13 +76,13 @@ public class CampusSubMenu {
         System.out.println("Digite o endereço do Campus: ");
         enderecoCampus = scanner.nextLine();
         campus.setEndereco(enderecoCampus);
-        CampusModel.create(campus);
+        campusModel.create(campus);
         clearAtributos();
     }
 
     public void listarCampus() {
         System.out.println("Listando todos os Campi:");
-        for (Campus c : CampusModel.getAll()) {
+        for (Campus c : campusModel.getAll()) {
             System.out.println(c.toString());
         }
         clearAtributos();
@@ -98,7 +102,7 @@ public class CampusSubMenu {
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
 
-        campus = CampusModel.get(idCampus);
+        campus = campusModel.get(idCampus);
 
         System.out.println("Digite o novo nome do Campus: ");
         nomeCampus = scanner.nextLine();
@@ -107,12 +111,12 @@ public class CampusSubMenu {
         enderecoCampus = scanner.nextLine();
         campus.setEndereco(enderecoCampus);
 
-        CampusModel.update(campus);
+        campusModel.update(campus);
         clearAtributos();
         System.out.println("Campus atualizado com sucesso!");
     }
 
-    public void deletaCampus(){
+    public void deletaCampus() {
 
         Campus campus = new Campus();
         String input;
@@ -125,9 +129,9 @@ public class CampusSubMenu {
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
 
-        campus = CampusModel.get(idCampus);
+        campus = this.campusModel.get(idCampus);
 
-        CampusModel.remove(campus);
+        this.campusModel.remove(campus);
         clearAtributos();
         System.out.println("Campus deletado com sucesso!");
     }

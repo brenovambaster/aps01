@@ -14,6 +14,8 @@ public class MainMenu {
         PredioSubMenu predioSubMenu = new PredioSubMenu();
         FuncionarioSubMenu funcionarioSubMenu = new FuncionarioSubMenu();
         EquipamentoSubMenu equipamentoSubMenu = new EquipamentoSubMenu();
+        SalaSubMenu salaSubMenu = new SalaSubMenu();
+        ReservaSubMenu reservaSubMenu = new ReservaSubMenu();
 
         while (true) {
 
@@ -39,7 +41,7 @@ public class MainMenu {
                     predioSubMenu.predioMenu();
                     break;
                 case "3":
-                    // Adicione o código para a opção 3
+                    salaSubMenu.salaMenu();
                     break;
                 case "4":
                     funcionarioSubMenu.funcionarioMenu();
@@ -48,7 +50,7 @@ public class MainMenu {
                     equipamentoSubMenu.equipamentoMenu();
                     break;
                 case "6":
-                    // Adicione o código para a opção 6
+                    reservaSubMenu.reservaMenu();
                     break;
                 case "8":
                     System.out.println("Sistema Encerrado pelo Usuario");

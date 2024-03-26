@@ -13,7 +13,5 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         MainMenu mainMenu = new MainMenu();
         mainMenu.mostrarMenu();
-
-
     }
 }

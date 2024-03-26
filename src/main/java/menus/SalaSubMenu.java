@@ -71,12 +71,13 @@ public class SalaSubMenu {
         }
     }
 
-    //public void listarPredios(){
-    //    System.out.println("Listando Prédios: ");
-     //   for (Predio predio : this.predioModel.getAll()) {
-    //        System.out.println(predio.toString());
-     //   }
-   // }
+    public void listarPredios(){
+        PredioModel predioModel = new PredioModel();
+        System.out.println("Listando Prédios: ");
+        for (Predio predio : predioModel.getAll()) {
+            System.out.println(predio.toString());
+        }
+    }
     public void cadastrarSala() {
         Scanner scanner = new Scanner(System.in);
         Predio predio = new Predio();
@@ -87,7 +88,7 @@ public class SalaSubMenu {
         Integer qtdLugares;
         Sala sala = new Sala();
 
-        //listarPredios();
+        listarPredios();
         System.out.println("Digite o id do predio vinculado a sala: ");
         input = scanner.nextLine();
         idPredio = Integer.parseInt(input);

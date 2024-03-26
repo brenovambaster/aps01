@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * @see Sala
  */
 public class SalaModel {
-    private ArrayList<Sala> salaList = new ArrayList<>();
-    private Integer id = 0;
+    private static ArrayList<Sala> salaList = new ArrayList<>();
+    private static Integer id = 0;
 
     public Integer create(Sala sala) {
         HelperUtil.validateObject(sala);

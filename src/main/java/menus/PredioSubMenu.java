@@ -9,6 +9,7 @@ import entidades.predio.Predio;
 import models.CampusModel;
 import models.PredioModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,25 +37,40 @@ public class PredioSubMenu {
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
-
-            switch (opcao) {
-                case "1":
-                    cadastrarPredio();
-                    break;
-                case "2":
-                    listarPredios();
-                    break;
-                case "3":
-                    atualizarPredio();
-                    break;
-                case "4":
-                    deletarPredio();
-                    break;
-                case "5":
-                    return;
-                default:
-                    System.out.println("Opção inválida");
-                    break;
+            try {
+                switch (opcao) {
+                    case "1":
+                        if (campusModel.getAll() == null || campusModel.getAll().isEmpty()) {
+                            throw new RuntimeException("Não é possível cadastrar um predio sem um campus cadastrado");
+                        }
+                        cadastrarPredio();
+                        break;
+                    case "2":
+                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                            throw new RuntimeException("Não Há predios cadastrados");
+                        }
+                        listarPredios();
+                        break;
+                    case "3":
+                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                            throw new RuntimeException("Não Há predios cadastrados");
+                        }
+                        atualizarPredio();
+                        break;
+                    case "4":
+                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                            throw new RuntimeException("Não Há predios cadastrados");
+                        }
+                        deletarPredio();
+                        break;
+                    case "5":
+                        return;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
             }
         }
     }
@@ -79,63 +95,110 @@ public class PredioSubMenu {
     }
 
     public void cadastrarPredio() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            Campus campus = new Campus();
+            Predio predio = new Predio();
+            String input;
+            Integer idCampus;
 
-        Scanner scanner = new Scanner(System.in);
-        Campus campus = new Campus();
-        Predio predio = new Predio();
-        String input;
-        Integer idCampus;
+            listarCampus();
+            System.out.println("Digite o id do campus que sera vinculado ao predio: ");
+            input = scanner.nextLine();
+            idCampus = Integer.parseInt(input);
+            campus = campusModel.get(idCampus);
+            if(campus == null){
+                throw new RuntimeException("Campus não encontrado");
+            }
+            predio.setCampus(campus);
 
-        listarCampus();
-        System.out.println("Digite o id do campus que sera vinculado ao predio: ");
-        input = scanner.nextLine();
-        idCampus = Integer.parseInt(input);
-        campus = campusModel.get(idCampus);
-        predio.setCampus(campus);
+            System.out.println("Digite o nome do predio: ");
+            predio.setNome(scanner.nextLine());
 
-        System.out.println("Digite o nome do predio: ");
-        predio.setNome(scanner.nextLine());
+            this.predioModel.create(predio);
+            clearAtributos();
 
-        this.predioModel.create(predio);
-        clearAtributos();
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void atualizarPredio() {
-        Predio predio = new Predio();
-        String nome;
-        String input;
-        Integer idPredio;
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Predio predio = new Predio();
+            String nome;
+            String input;
+            Integer idPredio;
+            Scanner scanner = new Scanner(System.in);
 
-        listarPredios();
+            listarPredios();
 
-        System.out.println("Digite o id do predio a ser atualizado: ");
-        input = scanner.nextLine();
-        idPredio = Integer.parseInt(input);
-        predio = this.predioModel.get(idPredio);
+            System.out.println("Digite o id do predio a ser atualizado: ");
+            input = scanner.nextLine();
+            idPredio = Integer.parseInt(input);
+            predio = this.predioModel.get(idPredio);
+            if(predio == null){
+                throw new RuntimeException("Predio não encontrado");
+            }
 
-        System.out.println("Digite o novo nome do predio: ");
-        nome = scanner.nextLine();
-        predio.setNome(nome);
+            System.out.println("Digite o novo nome do predio: ");
+            nome = scanner.nextLine();
+            predio.setNome(nome);
 
-        this.predioModel.update(predio);
-        clearAtributos();
+            this.predioModel.update(predio);
+            clearAtributos();
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deletarPredio() {
-        Predio predio = new Predio();
-        String input;
-        Integer idPredio;
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Predio predio = new Predio();
+            String input;
+            Integer idPredio;
+            Scanner scanner = new Scanner(System.in);
 
-        listarPredios();
+            listarPredios();
 
-        System.out.println("Digite o id do predio a ser deletado: ");
-        input = scanner.nextLine();
-        idPredio = Integer.parseInt(input);
-        predio = this.predioModel.get(idPredio);
+            System.out.println("Digite o id do predio a ser deletado: ");
+            input = scanner.nextLine();
+            idPredio = Integer.parseInt(input);
+            predio = this.predioModel.get(idPredio);
+            if(predio == null){
+                throw new RuntimeException("Predio não encontrado");
+            }
 
-        this.predioModel.remove(predio);
-        clearAtributos();
+            this.predioModel.remove(predio);
+            clearAtributos();
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

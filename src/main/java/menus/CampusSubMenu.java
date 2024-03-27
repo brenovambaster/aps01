@@ -34,28 +34,30 @@ public class CampusSubMenu {
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
-
-            switch (opcao) {
-                case "1":
-                    cadastrarCampus();
-                    break;
-                case "2":
-                    listarCampus();
-                    break;
-                case "3":
-                    atualizarCampus();
-                    break;
-                case "4":
-                    deletaCampus();
-                    break;
-                case "5":
-                    return;
-                default:
-                    System.out.println("Opção inválida");
-                    break;
+            try {
+                switch (opcao) {
+                    case "1":
+                        cadastrarCampus();
+                        break;
+                    case "2":
+                        listarCampus();
+                        break;
+                    case "3":
+                        atualizarCampus();
+                        break;
+                    case "4":
+                        deletaCampus();
+                        break;
+                    case "5":
+                        return;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
+                }
+            }catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
             }
         }
-
     }
 
     public void clearAtributos() {
@@ -65,19 +67,32 @@ public class CampusSubMenu {
     }
 
     public void cadastrarCampus() {
-        Campus campus = new Campus();
-        String nomeCampus;
-        String enderecoCampus;
-        Scanner scanner = new Scanner(System.in);
+        try{
+            Campus campus = new Campus();
+            String nomeCampus;
+            String enderecoCampus;
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o nome do Campus: ");
-        nomeCampus = scanner.nextLine();
-        campus.setNome(nomeCampus);
-        System.out.println("Digite o endereço do Campus: ");
-        enderecoCampus = scanner.nextLine();
-        campus.setEndereco(enderecoCampus);
-        campusModel.create(campus);
-        clearAtributos();
+            System.out.println("Digite o nome do Campus: ");
+            nomeCampus = scanner.nextLine();
+            campus.setNome(nomeCampus);
+            System.out.println("Digite o endereço do Campus: ");
+            enderecoCampus = scanner.nextLine();
+            campus.setEndereco(enderecoCampus);
+            campusModel.create(campus);
+            clearAtributos();
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarCampus() {
@@ -89,35 +104,50 @@ public class CampusSubMenu {
     }
 
     public void atualizarCampus() {
-        Campus campus = new Campus();
-        String nomeCampus;
-        String input;
-        Integer idCampus;
-        String enderecoCampus;
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Campus campus = new Campus();
+            String nomeCampus;
+            String input;
+            Integer idCampus;
+            String enderecoCampus;
+            Scanner scanner = new Scanner(System.in);
 
-        listarCampus();
+            listarCampus();
 
-        System.out.println("Digite o id do Campus a ser atualizado: ");
-        input = scanner.nextLine();
-        idCampus = Integer.parseInt(input);
+            System.out.println("Digite o id do Campus a ser atualizado: ");
+            input = scanner.nextLine();
+            idCampus = Integer.parseInt(input);
+            campus = campusModel.get(idCampus);
+            if(campus == null){
+                throw new RuntimeException("Campus não encontrado");
+            }
 
-        campus = campusModel.get(idCampus);
+            System.out.println("Digite o novo nome do Campus: ");
+            nomeCampus = scanner.nextLine();
+            campus.setNome(nomeCampus);
+            System.out.println("Digite o novo endereço do Campus: ");
+            enderecoCampus = scanner.nextLine();
+            campus.setEndereco(enderecoCampus);
 
-        System.out.println("Digite o novo nome do Campus: ");
-        nomeCampus = scanner.nextLine();
-        campus.setNome(nomeCampus);
-        System.out.println("Digite o novo endereço do Campus: ");
-        enderecoCampus = scanner.nextLine();
-        campus.setEndereco(enderecoCampus);
+            campusModel.update(campus);
+            clearAtributos();
+            System.out.println("Campus atualizado com sucesso!");
 
-        campusModel.update(campus);
-        clearAtributos();
-        System.out.println("Campus atualizado com sucesso!");
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deletaCampus() {
-
+        try {
         Campus campus = new Campus();
         String input;
         Integer idCampus;
@@ -128,11 +158,24 @@ public class CampusSubMenu {
         System.out.println("Digite o id do Campus a ser deletado: ");
         input = scanner.nextLine();
         idCampus = Integer.parseInt(input);
-
         campus = this.campusModel.get(idCampus);
-
+        if(campus == null){
+            throw new RuntimeException("Campus não encontrado");
+        }
         this.campusModel.remove(campus);
         clearAtributos();
         System.out.println("Campus deletado com sucesso!");
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

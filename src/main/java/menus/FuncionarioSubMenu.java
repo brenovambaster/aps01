@@ -9,7 +9,6 @@ import entidades.funcionario.Funcionario;
 import models.CampusModel;
 import models.FuncionarioModel;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class FuncionarioSubMenu {

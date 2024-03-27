@@ -9,8 +9,6 @@ import entidades.predio.Predio;
 import models.CampusModel;
 import models.PredioModel;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PredioSubMenu {

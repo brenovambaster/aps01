@@ -5,9 +5,9 @@
 package menus;
 
 
-import entidades.campus.Campus;
 import entidades.equipamento.Equipamento;
 import models.EquipamentoModel;
+
 import java.util.Scanner;
 public class EquipamentoSubMenu {
 

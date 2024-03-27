@@ -6,23 +6,23 @@ package menus;
 
 import entidades.equipamento.Equipamento;
 import entidades.funcionario.Funcionario;
+import entidades.reserva.Reserva;
 import entidades.sala.Sala;
 import entidades.usuario.Usuario;
-import entidades.reserva.Reserva;
 import models.EquipamentoModel;
 import models.FuncionarioModel;
 import models.ReservaModel;
 import models.SalaModel;
 
 import java.text.ParseException;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class ReservaSubMenu {
     Usuario usuario;
     List<Equipamento> equipamentos;
@@ -126,8 +126,17 @@ public class ReservaSubMenu {
     }
     public void listarReserva(){
         System.out.println("Listando Reservas: ");
+        System.out.println("-----Reservas ativas-----:");
         for (Reserva reserva : this.reservaModel.getAll()) {
-            System.out.println(reserva.toString());
+            if(reserva.getAtivo()){
+                System.out.println(reserva.toString());
+            }
+        }
+        System.out.println("-----Reservas inativas-----:");
+        for (Reserva reserva : this.reservaModel.getAll()) {
+            if (!reserva.getAtivo()) {
+                System.out.println(reserva.toString());
+            }
         }
     }
     public void listarEquipamentos(){
@@ -149,9 +158,10 @@ public class ReservaSubMenu {
             Scanner scanner6 = new Scanner(System.in);
             Scanner scanner7 = new Scanner(System.in);
 
-            Integer idFunc, idSala;
+            Integer idFunc, idSala,usado = 0;
             String idEquip, tipa, assunto, date;
             LocalDate data;
+            ArrayList<Sala> salasLivres = new ArrayList<>();
 
             listarFuncionarios();
             System.out.println("Digite o id do Funcionario vinculado a reserva: ");
@@ -166,18 +176,7 @@ public class ReservaSubMenu {
             tipa = scanner1.nextLine();
             reserva.setTipo(tipa);
 
-            listarSalas();
-            System.out.println("Digite o id da sala vinculada: ");
-            idSala = scanner2.nextInt();
-            sala = salaModel.get(idSala);
-            if(sala == null){
-                throw new RuntimeException("Sala não encontrado");
-            }
-
-            reserva.setSala(sala);
-
             System.out.println("Digite a data de alocação: (dd/MM/yyyy)");
-
             date = new Scanner(System.in).nextLine();
             SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
             formatoData.setLenient(false);
@@ -197,8 +196,33 @@ public class ReservaSubMenu {
             assunto = scanner6.nextLine();
             reserva.setAssunto(assunto);
 
-            listarEquipamentos();
+            System.out.println("Salas disponiveis na Data e horario fornecidos:");
+            salasLivres = this.reservaModel.obterSalasLivres(horaInicio,horaFim,dataAlocacao);
+            if (salasLivres.isEmpty()) {
+                throw new RuntimeException("# Não há salas livres #\n");
+            }
+            for (Sala s : salasLivres) {
+                System.out.println(s.toString());
+            }
 
+            System.out.println("Digite o id da sala vinculada: ");
+            idSala = scanner2.nextInt();
+            sala = salaModel.get(idSala);
+            if(sala == null){
+                throw new RuntimeException("Sala não encontrada");
+            }
+            for (Sala s : salasLivres) {
+                if(s == sala){
+                    usado = 1;
+                    break;
+                }
+            }
+            if(usado == 0){
+                throw new RuntimeException("Sala não disponivel");
+            }
+            reserva.setSala(sala);
+
+            listarEquipamentos();
             while (true) {
                 System.out.println("Digite o id dos equipamentos vinculado(digite 'q' para sair):");
                 idEquip = scanner7.nextLine();

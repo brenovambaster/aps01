@@ -4,7 +4,7 @@
 
 package menus;
 import java.util.Scanner;
-import menus.CampusSubMenu;
+
 public class MainMenu {
     String opcao;
 

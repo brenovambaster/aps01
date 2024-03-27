@@ -4,12 +4,11 @@
 
 package menus;
 
-import entidades.campus.Campus;
 import entidades.predio.Predio;
+import entidades.sala.Sala;
 import models.PredioModel;
 import models.ReservaModel;
 import models.SalaModel;
-import entidades.sala.Sala;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,7 +41,7 @@ public class SalaSubMenu {
             System.out.println("3 - Atualizar Sala");
             System.out.println("4 - Deletar Sala");
             System.out.println("5 - Voltar");
-            System.out.println("6- Disponibilidade de salas");
+            System.out.println("6 - Disponibilidade de salas");
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();

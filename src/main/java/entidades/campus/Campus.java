@@ -50,9 +50,9 @@ public class Campus {
     @Override
     public String toString() {
         return "Campus{" +
-                "nome='" + nome + '\'' +
+                "id=" + id  +
+                ", nome='" + nome + '\'' +
                 ", endereco='" + endereco + '\'' +
-                ", id=" + id +
                 '}';
     }
 }

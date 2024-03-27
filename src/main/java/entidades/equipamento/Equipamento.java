@@ -53,9 +53,9 @@ public class Equipamento {
     @Override
     public String toString() {
         return "Equipamento{" +
-                "nome='" + nome + '\'' +
+                " id=" + id +
+                ", nome='" + nome + '\'' +
                 ", patrimonio='" + patrimonio + '\'' +
-                ", id=" + id +
                 '}';
     }
 }

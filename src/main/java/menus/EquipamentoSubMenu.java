@@ -5,17 +5,15 @@
 package menus;
 
 
-import entidades.campus.Campus;
 import entidades.equipamento.Equipamento;
 import models.EquipamentoModel;
+
 import java.util.Scanner;
 public class EquipamentoSubMenu {
 
     String nomeEquipamento;
     String patrimonio;
-
     String opcao;
-
     EquipamentoModel equipamentoModel = new EquipamentoModel();
     public EquipamentoSubMenu() {
         this.nomeEquipamento = "";
@@ -35,25 +33,28 @@ public class EquipamentoSubMenu {
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
-
-            switch(opcao) {
-                case "1":
-                    cadastrarEquipamento();
-                    break;
-                case "2":
-                    listarEquipamentos();
-                    break;
-                case "3":
-                    atualizarEquipamentos();
-                    break;
-                case "4":
-                    deletaEquipamentos();
-                    break;
-                case "5":
-                    return;
-                default:
-                    System.out.println("Opção inválida");
-                    break;
+            try {
+                switch (opcao) {
+                    case "1":
+                        cadastrarEquipamento();
+                        break;
+                    case "2":
+                        listarEquipamentos();
+                        break;
+                    case "3":
+                        atualizarEquipamentos();
+                        break;
+                    case "4":
+                        deletaEquipamentos();
+                        break;
+                    case "5":
+                        return;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
+                }
+            }catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
             }
         }
     }
@@ -65,20 +66,33 @@ public class EquipamentoSubMenu {
     }
 
     public void cadastrarEquipamento(){
-        Equipamento equipamento = new Equipamento();
-        String nomeEquipamento;
-        String patrimonio;
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Equipamento equipamento = new Equipamento();
+            String nomeEquipamento;
+            String patrimonio;
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o nome do Equipamento: ");
-        nomeEquipamento = scanner.nextLine();
-        equipamento.setNome(nomeEquipamento);
+            System.out.println("Digite o nome do Equipamento: ");
+            nomeEquipamento = scanner.nextLine();
+            equipamento.setNome(nomeEquipamento);
 
-        System.out.println("Digite o patrimonio do Equipamento: ");
-        patrimonio = scanner.nextLine();
-        equipamento.setPatrimonio(patrimonio);
-        this.equipamentoModel.create(equipamento);
-        clearAtributos();
+            System.out.println("Digite o patrimonio do Equipamento: ");
+            patrimonio = scanner.nextLine();
+            equipamento.setPatrimonio(patrimonio);
+            this.equipamentoModel.create(equipamento);
+            clearAtributos();
+
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarEquipamentos(){
@@ -90,48 +104,77 @@ public class EquipamentoSubMenu {
     }
 
     public void atualizarEquipamentos(){
-        Equipamento equipamento = new Equipamento();
-        String nomeEquipamento;
-        String patrimonio;
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        Integer idEquipamento;
+        try{
+            Equipamento equipamento = new Equipamento();
+            String nomeEquipamento;
+            String patrimonio;
+            Scanner scanner = new Scanner(System.in);
+            String input;
+            Integer idEquipamento;
 
-        listarEquipamentos();
+            listarEquipamentos();
 
-        System.out.println("Digite o id do Equipamento a ser atualizado: ");
-        input = scanner.nextLine();
-        idEquipamento = Integer.parseInt(input);
+            System.out.println("Digite o id do Equipamento a ser atualizado: ");
+            input = scanner.nextLine();
+            idEquipamento = Integer.parseInt(input);
+            equipamento = this.equipamentoModel.get(idEquipamento);
+            if(equipamento == null){
+                throw new RuntimeException("Equipamento não encontrado");
+            }
+            System.out.println("Digite o nome do Equipamento: ");
+            nomeEquipamento = scanner.nextLine();
+            equipamento.setNome(nomeEquipamento);
 
-        equipamento = this.equipamentoModel.get(idEquipamento);
+            System.out.println("Digite o patrimonio do Equipamento: ");
+            patrimonio = scanner.nextLine();
+            equipamento.setPatrimonio(patrimonio);
 
-        System.out.println("Digite o nome do Equipamento: ");
-        nomeEquipamento = scanner.nextLine();
-        equipamento.setNome(nomeEquipamento);
+            this.equipamentoModel.update(equipamento);
+            clearAtributos();
 
-        System.out.println("Digite o patrimonio do Equipamento: ");
-        patrimonio = scanner.nextLine();
-        equipamento.setPatrimonio(patrimonio);
-
-        this.equipamentoModel.update(equipamento);
-        clearAtributos();
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deletaEquipamentos(){
-        Equipamento equipamento = new Equipamento();
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        Integer idEquipamento;
+        try{
+            Equipamento equipamento = new Equipamento();
+            Scanner scanner = new Scanner(System.in);
+            String input;
+            Integer idEquipamento;
 
-        listarEquipamentos();
+            listarEquipamentos();
 
-        System.out.println("Digite o id do Equipamento a ser deletado: ");
-        input = scanner.nextLine();
-        idEquipamento = Integer.parseInt(input);
+            System.out.println("Digite o id do Equipamento a ser deletado: ");
+            input = scanner.nextLine();
+            idEquipamento = Integer.parseInt(input);
+            equipamento = this.equipamentoModel.get(idEquipamento);
+            if(equipamento == null){
+                throw new RuntimeException("Equipamento não encontrado");
+            }
+            this.equipamentoModel.remove(equipamento);
+            clearAtributos();
+            System.out.println("Equipamento deletado com sucesso!");
 
-        equipamento = this.equipamentoModel.get(idEquipamento);
-        this.equipamentoModel.remove(equipamento);
-        clearAtributos();
-        System.out.println("Equipamento deletado com sucesso!");
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Array fora do limite");
+        }catch (StringIndexOutOfBoundsException e){
+            System.out.println("String fora do limite");
+        }catch (NullPointerException e){
+            System.out.println("Valores nulos nao sao validos");
+        }catch (NumberFormatException e){
+            System.out.println("Número inválido");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

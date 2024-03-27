@@ -11,6 +11,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import entidades.equipamento.Equipamento;
+import helpers.HelperUtil;
+import helpers.ReservaHelper;
+import models.ReservaModel;
+import models.SalaModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +23,7 @@ import java.util.List;
 public class Reserva {
     private Integer id;
     private Usuario usuario;
-    private final List<Equipamento> equipamentos;
+    private List<Equipamento> equipamentos;
     private Sala sala;
     private String tipo;
     private LocalDate dataAlocacao;

@@ -47,9 +47,9 @@ public class Predio {
     @Override
     public String toString() {
         return "Predio{" +
-                "nome='" + nome + '\'' +
+                " id=" + id +
+                ", nome='" + nome + '\'' +
                 ", campus=" + campus +
-                ", id=" + id +
                 '}';
     }
 }

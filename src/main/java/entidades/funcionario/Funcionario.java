@@ -22,8 +22,9 @@ public class Funcionario extends Usuario {
 
     @Override
     public String toString() {
-        return "Funcionario: {" +
-                "nome='" + nome + '\'' +
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", cargo='" + cargo + '\'' +
                 ", ramal='" + ramal + '\'' +
                 ", campus=" + campus +

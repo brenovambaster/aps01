@@ -108,6 +108,15 @@ public class ReservaModel implements IMetodos<Reserva> {
         return salasPersistidas;
     }
 
+
+    /**
+     * A partir de uma data, hora de início e hora de fim, verifica quais salas estão reservadas
+     *
+     * @param horaInicio
+     * @param horaFim
+     * @param dataAlocacao
+     * @return ArrayList<Sala> - Lista de salas reservadas
+     */
     public ArrayList<Sala> obterSalasReservadas(LocalTime horaInicio, LocalTime horaFim, LocalDate dataAlocacao) {
         // copia da lista de reservas
         ArrayList<Reserva> reservas = this.getAll();

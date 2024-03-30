@@ -98,4 +98,12 @@ public class ReservaController {
         }
         return fun;
     }
+
+    public ArrayList<Sala> obterSalasReservadasPorMes(LocalDate dataAlocacao) {
+        return reservaModel.obterSalasReservadasPorMes(dataAlocacao);
+    }
+
+    public ArrayList<Sala> obterSalasReservadasPorDia(LocalDate dataAlocacao) {
+        return reservaModel.obterSalasReservadasPorDia(dataAlocacao);
+    }
 }

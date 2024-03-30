@@ -127,6 +127,28 @@ public class ReservaModel implements IMetodos<Reserva> {
         return salasReservadas;
     }
 
+    public ArrayList<Sala> obterSalasReservadasPorDia(LocalDate dataAlocacao) {
+        ArrayList<Reserva> reservas = this.getAll();
+        ArrayList<Sala> salasReservadas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getDataAlocacao().equals(dataAlocacao)) {
+                salasReservadas.add(r.getSala());
+            }
+        }
+        return salasReservadas;
+    }
+
+    public ArrayList<Sala> obterSalasReservadasPorMes(LocalDate dataAlocacao) {
+        ArrayList<Reserva> reservas = this.getAll();
+        ArrayList<Sala> salasReservadas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getDataAlocacao().getMonth().equals(dataAlocacao.getMonth())) {
+                salasReservadas.add(r.getSala());
+            }
+        }
+        return salasReservadas;
+    }
+
     /**
      * @return
      */

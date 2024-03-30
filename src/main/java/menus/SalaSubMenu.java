@@ -9,8 +9,6 @@ import controller.ReservaController;
 import controller.SalaController;
 import entidades.Predio;
 import entidades.Sala;
-import models.PredioModel;
-import models.ReservaModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +24,7 @@ public class SalaSubMenu {
     Predio predio;
     String opcao;
     PredioController predioController = new PredioController();
-
+    ReservaController reservaController = new ReservaController();
 
     public void SalaSubMenu() {
         this.numeroSala = null;
@@ -44,6 +42,7 @@ public class SalaSubMenu {
             System.out.println("4 - Deletar Sala");
             System.out.println("5 - Voltar");
             System.out.println("6 - Disponibilidade de salas");
+            System.out.println("7- Ocupação de salas por data");
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
@@ -82,6 +81,12 @@ public class SalaSubMenu {
                         }
                         verDisponibilidadeSalas();
                         break;
+                    case "7":
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
+                            throw new RuntimeException("Não há salas cadastradas");
+                        }
+                        ocupacaoSalasPorData();
+                        break;
                     default:
                         System.out.println("Opção inválida");
                         break;
@@ -111,6 +116,33 @@ public class SalaSubMenu {
         for (Predio predio : predioController.getAll()) {
             System.out.println(predio.toString());
         }
+    }
+
+    public void ocupacaoSalasPorData() {
+        LocalDate data;
+        System.out.println("Digite a data de ocupação: (dd/MM/yyyy)");
+        String date = new Scanner(System.in).nextLine();
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        formatoData.setLenient(false);
+
+        try {
+            data = formatoData.parse(date).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (ParseException e) {
+            throw new RuntimeException("Parse da data falhou:  " + e);
+        }
+
+        System.out.println("----------- Ocupação de salas por dia: -----------------");
+        for (Sala sala : reservaController.obterSalasReservadasPorDia(data)) {
+            System.out.println(sala.toString());
+        }
+        System.out.println("\n\n");
+
+        System.out.println("----------- Ocupação de salas por mês: -----------------");
+        for (Sala sala : reservaController.obterSalasReservadasPorMes(data)) {
+            System.out.println(sala.toString());
+        }
+        System.out.println("\n\n");
+
     }
 
     public void cadastrarSala() {

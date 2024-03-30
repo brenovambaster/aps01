@@ -4,7 +4,7 @@
 
 package models;
 
-import entidades.campus.Campus;
+import entidades.Campus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

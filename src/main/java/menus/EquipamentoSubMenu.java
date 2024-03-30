@@ -5,16 +5,20 @@
 package menus;
 
 
-import entidades.equipamento.Equipamento;
+import controller.EquipamentoController;
+import entidades.Equipamento;
 import models.EquipamentoModel;
 
 import java.util.Scanner;
+
 public class EquipamentoSubMenu {
 
     String nomeEquipamento;
     String patrimonio;
     String opcao;
-    EquipamentoModel equipamentoModel = new EquipamentoModel();
+
+    EquipamentoController equipamentoController = new EquipamentoController();
+
     public EquipamentoSubMenu() {
         this.nomeEquipamento = "";
         this.patrimonio = "";
@@ -22,7 +26,7 @@ public class EquipamentoSubMenu {
 
     public void equipamentoMenu() {
 
-        while(true){
+        while (true) {
 
             System.out.println("Menu Equipamento");
             System.out.println("1 - Cadastrar Equipamento");
@@ -53,59 +57,59 @@ public class EquipamentoSubMenu {
                         System.out.println("Opção inválida");
                         break;
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Erro: " + e.getMessage());
             }
         }
     }
 
-    public void clearAtributos(){
+    public void clearAtributos() {
         this.nomeEquipamento = null;
         this.patrimonio = null;
-        this.opcao =null;
+        this.opcao = null;
     }
 
-    public void cadastrarEquipamento(){
+    public void cadastrarEquipamento() {
         try {
-            Equipamento equipamento = new Equipamento();
+
             String nomeEquipamento;
             String patrimonio;
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Digite o nome do Equipamento: ");
             nomeEquipamento = scanner.nextLine();
-            equipamento.setNome(nomeEquipamento);
+
 
             System.out.println("Digite o patrimonio do Equipamento: ");
             patrimonio = scanner.nextLine();
-            equipamento.setPatrimonio(patrimonio);
-            this.equipamentoModel.create(equipamento);
+
+            equipamentoController.create(nomeEquipamento, patrimonio);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void listarEquipamentos(){
+    public void listarEquipamentos() {
         System.out.println("Listando equipamentos:");
-        for(Equipamento equipamento : this.equipamentoModel.getAll()){
+        for (Equipamento equipamento : equipamentoController.getAll()) {
             System.out.println(equipamento);
         }
         clearAtributos();
     }
 
-    public void atualizarEquipamentos(){
-        try{
-            Equipamento equipamento = new Equipamento();
+    public void atualizarEquipamentos() {
+        try {
+
             String nomeEquipamento;
             String patrimonio;
             Scanner scanner = new Scanner(System.in);
@@ -117,37 +121,35 @@ public class EquipamentoSubMenu {
             System.out.println("Digite o id do Equipamento a ser atualizado: ");
             input = scanner.nextLine();
             idEquipamento = Integer.parseInt(input);
-            equipamento = this.equipamentoModel.get(idEquipamento);
-            if(equipamento == null){
+
+            if (equipamentoController.get(idEquipamento) == null) {
                 throw new RuntimeException("Equipamento não encontrado");
             }
             System.out.println("Digite o nome do Equipamento: ");
             nomeEquipamento = scanner.nextLine();
-            equipamento.setNome(nomeEquipamento);
 
             System.out.println("Digite o patrimonio do Equipamento: ");
             patrimonio = scanner.nextLine();
-            equipamento.setPatrimonio(patrimonio);
 
-            this.equipamentoModel.update(equipamento);
+            equipamentoController.update(idEquipamento, nomeEquipamento, patrimonio);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void deletaEquipamentos(){
-        try{
-            Equipamento equipamento = new Equipamento();
+    public void deletaEquipamentos() {
+        try {
+            EquipamentoController equipamentoController = new EquipamentoController();
             Scanner scanner = new Scanner(System.in);
             String input;
             Integer idEquipamento;
@@ -157,23 +159,23 @@ public class EquipamentoSubMenu {
             System.out.println("Digite o id do Equipamento a ser deletado: ");
             input = scanner.nextLine();
             idEquipamento = Integer.parseInt(input);
-            equipamento = this.equipamentoModel.get(idEquipamento);
-            if(equipamento == null){
+
+            if (equipamentoController.get(idEquipamento) == null) {
                 throw new RuntimeException("Equipamento não encontrado");
             }
-            this.equipamentoModel.remove(equipamento);
+            equipamentoController.remove(idEquipamento);
             clearAtributos();
             System.out.println("Equipamento deletado com sucesso!");
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

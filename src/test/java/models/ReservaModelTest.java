@@ -4,17 +4,16 @@
 
 package models;
 
-import entidades.equipamento.Equipamento;
-import entidades.professor.Professor;
-import entidades.reserva.Reserva;
-import entidades.sala.Sala;
+import entidades.Equipamento;
+import entidades.Professor;
+import entidades.Reserva;
+import entidades.Sala;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 

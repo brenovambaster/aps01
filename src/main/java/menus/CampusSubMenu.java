@@ -4,8 +4,8 @@
 
 package menus;
 
-import entidades.campus.Campus;
-import models.CampusModel;
+import controller.CampusController;
+import entidades.Campus;
 
 import java.util.Scanner;
 
@@ -13,13 +13,7 @@ public class CampusSubMenu {
     String nomeCampus;
     String enderecoCampus;
     String opcao;
-    CampusModel campusModel = new CampusModel();
-
-    public void CampusSubMenu() {
-        this.nomeCampus = "";
-        this.enderecoCampus = "";
-        this.opcao = "";
-    }
+    CampusController campusController = new CampusController();
 
     public void campusMenu() {
 
@@ -54,7 +48,7 @@ public class CampusSubMenu {
                         System.out.println("Opção inválida");
                         break;
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Erro: " + e.getMessage());
             }
         }
@@ -67,114 +61,111 @@ public class CampusSubMenu {
     }
 
     public void cadastrarCampus() {
-        try{
-            Campus campus = new Campus();
-            String nomeCampus;
-            String enderecoCampus;
+
+        try {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Digite o nome do Campus: ");
             nomeCampus = scanner.nextLine();
-            campus.setNome(nomeCampus);
+
             System.out.println("Digite o endereço do Campus: ");
             enderecoCampus = scanner.nextLine();
-            campus.setEndereco(enderecoCampus);
-            campusModel.create(campus);
-            clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+            campusController.create(nomeCampus, enderecoCampus);
+
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void listarCampus() {
+
         System.out.println("Listando todos os Campi:");
-        for (Campus c : campusModel.getAll()) {
+        for (Campus c : campusController.getAll()) {
             System.out.println(c.toString());
         }
-        clearAtributos();
     }
 
     public void atualizarCampus() {
+
         try {
             Campus campus = new Campus();
+            Scanner scanner = new Scanner(System.in);
             String nomeCampus;
             String input;
             Integer idCampus;
             String enderecoCampus;
-            Scanner scanner = new Scanner(System.in);
 
             listarCampus();
 
             System.out.println("Digite o id do Campus a ser atualizado: ");
             input = scanner.nextLine();
             idCampus = Integer.parseInt(input);
-            campus = campusModel.get(idCampus);
-            if(campus == null){
+            if (campus == null) {
                 throw new RuntimeException("Campus não encontrado");
             }
 
             System.out.println("Digite o novo nome do Campus: ");
             nomeCampus = scanner.nextLine();
-            campus.setNome(nomeCampus);
+
             System.out.println("Digite o novo endereço do Campus: ");
             enderecoCampus = scanner.nextLine();
-            campus.setEndereco(enderecoCampus);
 
-            campusModel.update(campus);
+            campusController.update(idCampus, nomeCampus, enderecoCampus);
             clearAtributos();
             System.out.println("Campus atualizado com sucesso!");
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void deletaCampus() {
         try {
-        Campus campus = new Campus();
-        String input;
-        Integer idCampus;
-        Scanner scanner = new Scanner(System.in);
 
-        listarCampus();
+            Campus campus = new Campus();
+            String input;
+            Integer idCampus;
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o id do Campus a ser deletado: ");
-        input = scanner.nextLine();
-        idCampus = Integer.parseInt(input);
-        campus = this.campusModel.get(idCampus);
-        if(campus == null){
-            throw new RuntimeException("Campus não encontrado");
-        }
-        this.campusModel.remove(campus);
-        clearAtributos();
-        System.out.println("Campus deletado com sucesso!");
+            listarCampus();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Digite o id do Campus a ser deletado: ");
+            input = scanner.nextLine();
+            idCampus = Integer.parseInt(input);
+            campus = campusController.get(idCampus);
+            if (campus == null) {
+                throw new RuntimeException("Campus não encontrado");
+            }
+            campusController.remove(idCampus);
+            clearAtributos();
+            System.out.println("Campus deletado com sucesso!");
+
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

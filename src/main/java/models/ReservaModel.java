@@ -4,8 +4,8 @@
 
 package models;
 
-import entidades.reserva.Reserva;
-import entidades.sala.Sala;
+import entidades.Reserva;
+import entidades.Sala;
 import helpers.HelperUtil;
 import interfaces.IMetodos;
 
@@ -14,8 +14,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import helpers.ReservaHelper;
-
-import javax.swing.text.html.HTMLEditorKit;
 
 public class ReservaModel implements IMetodos<Reserva> {
     private static ArrayList<Reserva> reservasList = new ArrayList<>();

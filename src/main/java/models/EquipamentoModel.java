@@ -1,6 +1,6 @@
 package models;
 
-import entidades.equipamento.Equipamento;
+import entidades.Equipamento;
 import helpers.HelperUtil;
 import interfaces.IMetodos;
 

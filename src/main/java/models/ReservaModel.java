@@ -4,8 +4,8 @@
 
 package models;
 
-import entidades.reserva.Reserva;
-import entidades.sala.Sala;
+import entidades.Reserva;
+import entidades.Sala;
 import helpers.HelperUtil;
 import interfaces.IMetodos;
 
@@ -14,8 +14,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import helpers.ReservaHelper;
-
-import javax.swing.text.html.HTMLEditorKit;
 
 public class ReservaModel implements IMetodos<Reserva> {
     private static ArrayList<Reserva> reservasList = new ArrayList<>();
@@ -123,6 +121,28 @@ public class ReservaModel implements IMetodos<Reserva> {
         ArrayList<Sala> salasReservadas = new ArrayList<>();
         for (Reserva r : reservas) {
             if (r.getDataAlocacao().equals(dataAlocacao) && HelperUtil.isHorarioConflitante(r, horaInicio, horaFim)) {
+                salasReservadas.add(r.getSala());
+            }
+        }
+        return salasReservadas;
+    }
+
+    public ArrayList<Sala> obterSalasReservadasPorDia(LocalDate dataAlocacao) {
+        ArrayList<Reserva> reservas = this.getAll();
+        ArrayList<Sala> salasReservadas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getDataAlocacao().equals(dataAlocacao)) {
+                salasReservadas.add(r.getSala());
+            }
+        }
+        return salasReservadas;
+    }
+
+    public ArrayList<Sala> obterSalasReservadasPorMes(LocalDate dataAlocacao) {
+        ArrayList<Reserva> reservas = this.getAll();
+        ArrayList<Sala> salasReservadas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getDataAlocacao().getMonth().equals(dataAlocacao.getMonth())) {
                 salasReservadas.add(r.getSala());
             }
         }

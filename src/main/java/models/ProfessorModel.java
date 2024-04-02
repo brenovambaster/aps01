@@ -6,7 +6,7 @@ package models;
 
 import helpers.HelperUtil;
 import interfaces.IMetodos;
-import entidades.professor.Professor;
+import entidades.Professor;
 
 import java.util.ArrayList;
 

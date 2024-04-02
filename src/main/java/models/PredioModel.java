@@ -6,10 +6,11 @@ package models;
 
 import java.util.ArrayList;
 
-import entidades.predio.Predio;
+import entidades.Predio;
 import helpers.HelperUtil;
+import interfaces.IMetodos;
 
-public class PredioModel {
+public class PredioModel implements IMetodos<Predio> {
     private static ArrayList<Predio> predioList = new ArrayList<>();
     private static Integer id = 0;
 
@@ -37,16 +38,17 @@ public class PredioModel {
     }
 
     //TODO: Encontrar outra forma de fazer o update. Se Predio ter mais atributos o código ficará muito grande.
-    public void update(Predio predio) {
+    public Boolean update(Predio predio) {
         HelperUtil.validateObject(predio);
 
         for (Predio p : predioList) {
             if (p.getId().equals(predio.getId())) {
                 p.setNome(predio.getNome());
                 p.setCampus(predio.getCampus());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public Predio get(int id) {

@@ -4,11 +4,11 @@
 
 package menus;
 
-import entidades.predio.Predio;
-import entidades.sala.Sala;
-import models.PredioModel;
-import models.ReservaModel;
-import models.SalaModel;
+import controller.PredioController;
+import controller.ReservaController;
+import controller.SalaController;
+import entidades.Predio;
+import entidades.Sala;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,8 +23,8 @@ public class SalaSubMenu {
     Integer qtdLugares;
     Predio predio;
     String opcao;
-    PredioModel predioModel = new PredioModel();
-    SalaModel salaModel = new SalaModel();
+    PredioController predioController = new PredioController();
+    ReservaController reservaController = new ReservaController();
 
     public void SalaSubMenu() {
         this.numeroSala = null;
@@ -42,31 +42,33 @@ public class SalaSubMenu {
             System.out.println("4 - Deletar Sala");
             System.out.println("5 - Voltar");
             System.out.println("6 - Disponibilidade de salas");
+            System.out.println("7- Ocupação de salas por data");
 
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
             try {
+                SalaController salaController = new SalaController();
                 switch (opcao) {
                     case "1":
-                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                        if (predioController.getAll() == null || predioController.getAll().isEmpty()) {
                             throw new RuntimeException("Não é possível cadastrar uma sala sem um predio cadastrado");
                         }
                         cadastrarSala();
                         break;
                     case "2":
-                        if (salaModel.getAll() == null || salaModel.getAll().isEmpty()) {
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
                             throw new RuntimeException("Não há salas cadastradas");
                         }
                         listarSala();
                         break;
                     case "3":
-                        if (salaModel.getAll() == null || salaModel.getAll().isEmpty()) {
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
                             throw new RuntimeException("Não há salas cadastradas");
                         }
                         atualizarSala();
                         break;
                     case "4":
-                        if (salaModel.getAll() == null || salaModel.getAll().isEmpty()) {
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
                             throw new RuntimeException("Não há salas cadastradas");
                         }
                         deletarSala();
@@ -74,10 +76,16 @@ public class SalaSubMenu {
                     case "5":
                         return;
                     case "6":
-                        if (salaModel.getAll() == null || salaModel.getAll().isEmpty()) {
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
                             throw new RuntimeException("Não há salas cadastradas");
                         }
                         verDisponibilidadeSalas();
+                        break;
+                    case "7":
+                        if (salaController.getAll() == null || salaController.getAll().isEmpty()) {
+                            throw new RuntimeException("Não há salas cadastradas");
+                        }
+                        ocupacaoSalasPorData();
                         break;
                     default:
                         System.out.println("Opção inválida");
@@ -96,49 +104,68 @@ public class SalaSubMenu {
     }
 
     public void listarSala() {
+        SalaController salaController = new SalaController();
         System.out.println("Listando Salas: ");
-        for (Sala sala : this.salaModel.getAll()) {
+        for (Sala sala : salaController.getAll()) {
             System.out.println(sala.toString());
         }
     }
 
     public void listarPredios() {
         System.out.println("Listando Prédios: ");
-        for (Predio predio : predioModel.getAll()) {
+        for (Predio predio : predioController.getAll()) {
             System.out.println(predio.toString());
         }
+    }
+
+    public void ocupacaoSalasPorData() {
+        LocalDate data;
+        System.out.println("Digite a data de ocupação: (dd/MM/yyyy)");
+        String date = new Scanner(System.in).nextLine();
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        formatoData.setLenient(false);
+
+        try {
+            data = formatoData.parse(date).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (ParseException e) {
+            throw new RuntimeException("Parse da data falhou:  " + e);
+        }
+
+        System.out.println("----------- Ocupação de salas por dia: -----------------");
+        for (Sala sala : reservaController.obterSalasReservadasPorDia(data)) {
+            System.out.println(sala.toString());
+        }
+        System.out.println("\n\n");
+
+        System.out.println("----------- Ocupação de salas por mês: -----------------");
+        for (Sala sala : reservaController.obterSalasReservadasPorMes(data)) {
+            System.out.println(sala.toString());
+        }
+        System.out.println("\n\n");
+
     }
 
     public void cadastrarSala() {
         try {
             Scanner scanner = new Scanner(System.in);
-            Predio predio = new Predio();
-            PredioModel predioModel = new PredioModel();
             String input;
             Integer idPredio;
             Integer numeroSala;
             Integer qtdLugares;
-            Sala sala = new Sala();
 
             listarPredios();
             System.out.println("Digite o id do predio vinculado a sala: ");
             input = scanner.nextLine();
             idPredio = Integer.parseInt(input);
-            predio = predioModel.get(idPredio);
-            if (predio == null) {
-                throw new RuntimeException("Predio não encontrado");
-            }
-            sala.setPredio(predio);
 
             System.out.println("Digite o número da sala: ");
             numeroSala = scanner.nextInt();
-            sala.setNumeroSala(numeroSala);
 
             System.out.println("Digite a quantidade de lugares: ");
             qtdLugares = scanner.nextInt();
-            sala.setQtdLugares(qtdLugares);
 
-            this.salaModel.create(sala);
+            SalaController salaController = new SalaController();
+            salaController.create(numeroSala, idPredio, qtdLugares);
             clearAtributos();
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -156,41 +183,35 @@ public class SalaSubMenu {
 
     public void atualizarSala() {
         try {
-            Sala sala = new Sala();
+
             String input;
             Integer idSala;
             Integer numeroSala;
             Integer qtdLugares;
             Integer idPredio;
             Scanner scanner = new Scanner(System.in);
-            Predio predio = new Predio();
-            PredioModel predioModel = new PredioModel();
 
             listarSala();
 
             System.out.println("Digite o id da sala a ser atualizada: ");
             input = scanner.nextLine();
             idSala = Integer.parseInt(input);
-            sala = this.salaModel.get(idSala);
-            if (sala == null) {
-                throw new RuntimeException("Sala não encontrada");
-            }
+
 
             System.out.println("Digite o novo número da sala: ");
             numeroSala = scanner.nextInt();
-            sala.setNumeroSala(numeroSala);
+
 
             System.out.println("Digite a nova quantidade de lugares: ");
             qtdLugares = scanner.nextInt();
-            sala.setQtdLugares(qtdLugares);
+
 
             System.out.println("Digite o id do predio vinculado a sala: ");
-            input = scanner.nextLine();
+            input = (String.valueOf(scanner.nextInt()));
             idPredio = Integer.parseInt(input);
-            predio = predioModel.get(idPredio);
 
-            sala.setPredio(predio);
-            this.salaModel.update(sala);
+            SalaController salaController = new SalaController();
+            salaController.update(idSala, numeroSala, idPredio, qtdLugares);
             clearAtributos();
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -208,7 +229,7 @@ public class SalaSubMenu {
 
     public void deletarSala() {
         try {
-            Sala sala = new Sala();
+
             String input;
             Integer idSala;
             Scanner scanner = new Scanner(System.in);
@@ -218,11 +239,9 @@ public class SalaSubMenu {
             System.out.println("Digite o id da sala a ser deletada: ");
             input = scanner.nextLine();
             idSala = Integer.parseInt(input);
-            sala = this.salaModel.get(idSala);
-            if (sala == null) {
-                throw new RuntimeException("Sala não encontrada");
-            }
-            this.salaModel.remove(sala);
+
+            SalaController salaController = new SalaController();
+            salaController.remove(idSala);
             clearAtributos();
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -242,7 +261,8 @@ public class SalaSubMenu {
         String date;
         LocalDate data;
         Scanner scanner = new Scanner(System.in);
-        ReservaModel reservaModel = new ReservaModel();
+        ReservaController reservaController = new ReservaController();
+
         ArrayList<Sala> salasLivres = new ArrayList<>();
         System.out.println("Digite a data para consulta: (dd/MM/yyyy)");
 
@@ -261,7 +281,7 @@ public class SalaSubMenu {
 
         System.out.println("Digite a hora de fim:(HH:mm) ");
         LocalTime horaFim = LocalTime.parse(scanner.nextLine());
-        salasLivres = reservaModel.obterSalasLivres(horaInicio, horaFim, data);
+        salasLivres = reservaController.obterSalasLivres(horaInicio, horaFim, data);
         System.out.println("\n----------------Salas livres---------------------\n ");
         if (salasLivres.isEmpty()) {
             System.out.println("# Não há salas livres #\n");
@@ -271,7 +291,7 @@ public class SalaSubMenu {
         }
 
         System.out.println("\n--------------Salas reservadas ---------------\n ");
-        ArrayList<Sala> salasReservadas = reservaModel.obterSalasReservadas(horaInicio, horaFim, data);
+        ArrayList<Sala> salasReservadas = reservaController.obterSalasReservadas(horaInicio, horaFim, data);
         if (salasReservadas.isEmpty()) {
             System.out.println("# Não há salas reservadas #\n");
         }

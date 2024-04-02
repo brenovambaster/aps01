@@ -2,9 +2,7 @@
  * Copyright (c) 2024. @author: Breno Vambaster
  ******************************************************************************/
 
-package entidades.sala;
-
-import entidades.predio.Predio;
+package entidades;
 
 /**
  * Classe Sala

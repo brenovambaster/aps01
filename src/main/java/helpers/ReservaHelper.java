@@ -4,7 +4,7 @@
 
 package helpers;
 
-import entidades.reserva.Reserva;
+import entidades.Reserva;
 
 import java.util.ArrayList;
 

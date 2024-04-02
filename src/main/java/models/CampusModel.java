@@ -4,7 +4,7 @@
 
 package models;
 
-import entidades.campus.Campus;
+import entidades.Campus;
 import helpers.HelperUtil;
 import interfaces.IMetodos;
 

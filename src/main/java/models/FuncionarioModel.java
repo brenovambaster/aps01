@@ -4,7 +4,7 @@
 
 package models;
 
-import entidades.funcionario.Funcionario;
+import entidades.Funcionario;
 import interfaces.IMetodos;
 import helpers.HelperUtil;
 

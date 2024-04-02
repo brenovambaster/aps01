@@ -4,9 +4,9 @@
 
 package models;
 
-import entidades.campus.Campus;
-import entidades.predio.Predio;
-import entidades.sala.Sala;
+import entidades.Campus;
+import entidades.Predio;
+import entidades.Sala;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

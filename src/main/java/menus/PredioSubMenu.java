@@ -4,10 +4,10 @@
 
 package menus;
 
-import entidades.campus.Campus;
-import entidades.predio.Predio;
-import models.CampusModel;
-import models.PredioModel;
+import controller.CampusController;
+import controller.PredioController;
+import entidades.Campus;
+import entidades.Predio;
 
 import java.util.Scanner;
 
@@ -16,8 +16,8 @@ public class PredioSubMenu {
     String nome;
     Campus campus;
 
-    PredioModel predioModel = new PredioModel();
-    CampusModel campusModel = new CampusModel();
+
+    CampusController campusController = new CampusController();
 
     public PredioSubMenu() {
         this.nome = "";
@@ -36,27 +36,28 @@ public class PredioSubMenu {
             Scanner scanner = new Scanner(System.in);
             opcao = scanner.nextLine();
             try {
+                PredioController predioController = new PredioController();
                 switch (opcao) {
                     case "1":
-                        if (campusModel.getAll() == null || campusModel.getAll().isEmpty()) {
+                        if (campusController.getAll() == null || campusController.getAll().isEmpty()) {
                             throw new RuntimeException("Não é possível cadastrar um predio sem um campus cadastrado");
                         }
                         cadastrarPredio();
                         break;
                     case "2":
-                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                        if (predioController.getAll() == null || predioController.getAll().isEmpty()) {
                             throw new RuntimeException("Não Há predios cadastrados");
                         }
                         listarPredios();
                         break;
                     case "3":
-                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                        if (predioController.getAll() == null || predioController.getAll().isEmpty()) {
                             throw new RuntimeException("Não Há predios cadastrados");
                         }
                         atualizarPredio();
                         break;
                     case "4":
-                        if (predioModel.getAll() == null || predioModel.getAll().isEmpty()) {
+                        if (predioController.getAll() == null || predioController.getAll().isEmpty()) {
                             throw new RuntimeException("Não Há predios cadastrados");
                         }
                         deletarPredio();
@@ -79,59 +80,56 @@ public class PredioSubMenu {
     }
 
     public void listarPredios() {
+        PredioController predioController = new PredioController();
         System.out.println("Predios Cadastrados: ");
-        for (Predio p : this.predioModel.getAll()) {
+        for (Predio p : predioController.getAll()) {
             System.out.println(p.toString());
         }
     }
 
     public void listarCampus() {
         System.out.println("Campi Cadastrados: ");
-        for (Campus c : campusModel.getAll()) {
+        for (Campus c : campusController.getAll()) {
             System.out.println(c.toString());
         }
     }
 
     public void cadastrarPredio() {
         try {
+            PredioController predioController = new PredioController();
             Scanner scanner = new Scanner(System.in);
-            Campus campus = new Campus();
-            Predio predio = new Predio();
-            String input;
+
+            String input, nomePredio;
             Integer idCampus;
 
             listarCampus();
             System.out.println("Digite o id do campus que sera vinculado ao predio: ");
             input = scanner.nextLine();
             idCampus = Integer.parseInt(input);
-            campus = campusModel.get(idCampus);
-            if(campus == null){
-                throw new RuntimeException("Campus não encontrado");
-            }
-            predio.setCampus(campus);
+
 
             System.out.println("Digite o nome do predio: ");
-            predio.setNome(scanner.nextLine());
+            nomePredio = scanner.nextLine();
 
-            this.predioModel.create(predio);
+            predioController.create(nomePredio, idCampus);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void atualizarPredio() {
         try {
-            Predio predio = new Predio();
+
             String nome;
             String input;
             Integer idPredio;
@@ -142,34 +140,31 @@ public class PredioSubMenu {
             System.out.println("Digite o id do predio a ser atualizado: ");
             input = scanner.nextLine();
             idPredio = Integer.parseInt(input);
-            predio = this.predioModel.get(idPredio);
-            if(predio == null){
-                throw new RuntimeException("Predio não encontrado");
-            }
+
 
             System.out.println("Digite o novo nome do predio: ");
             nome = scanner.nextLine();
-            predio.setNome(nome);
 
-            this.predioModel.update(predio);
+            PredioController predioController = new PredioController();
+            predioController.update(idPredio, nome);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void deletarPredio() {
         try {
-            Predio predio = new Predio();
+
             String input;
             Integer idPredio;
             Scanner scanner = new Scanner(System.in);
@@ -179,23 +174,19 @@ public class PredioSubMenu {
             System.out.println("Digite o id do predio a ser deletado: ");
             input = scanner.nextLine();
             idPredio = Integer.parseInt(input);
-            predio = this.predioModel.get(idPredio);
-            if(predio == null){
-                throw new RuntimeException("Predio não encontrado");
-            }
-
-            this.predioModel.remove(predio);
+            PredioController predioController = new PredioController();
+            predioController.remove(idPredio);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

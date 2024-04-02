@@ -4,10 +4,10 @@
 
 package menus;
 
-import entidades.campus.Campus;
-import entidades.funcionario.Funcionario;
-import models.CampusModel;
-import models.FuncionarioModel;
+import controller.CampusController;
+import controller.FuncionarioController;
+import entidades.Campus;
+import entidades.Funcionario;
 
 import java.util.Scanner;
 
@@ -19,9 +19,6 @@ public class FuncionarioSubMenu {
     Campus campus;
 
 
-    FuncionarioModel funcionarioModel = new FuncionarioModel();
-    CampusModel campusModel = new CampusModel();
-
     public FuncionarioSubMenu() {
         this.nome = "";
         this.cargo = "";
@@ -30,7 +27,8 @@ public class FuncionarioSubMenu {
     }
 
     public void funcionarioMenu() {
-
+        FuncionarioController funcionarioController = new FuncionarioController();
+        CampusController campusController = new CampusController();
         while (true) {
             System.out.println("Menu Funcionario");
             System.out.println("1 - Cadastrar Funcionario");
@@ -40,29 +38,30 @@ public class FuncionarioSubMenu {
             System.out.println("5 - Voltar");
 
             Scanner scanner = new Scanner(System.in);
+
             opcao = scanner.nextLine();
             try {
                 switch (opcao) {
                     case "1":
-                        if (campusModel.getAll() == null || campusModel.getAll().isEmpty()) {
+                        if (campusController.getAll() == null || campusController.getAll().isEmpty()) {
                             throw new RuntimeException("Não é possível cadastrar um funcionário sem um campus cadastrado");
                         }
                         cadastrarFuncionario();
                         break;
                     case "2":
-                        if (this.funcionarioModel.getAll() == null) {
+                        if (funcionarioController.getAll() == null) {
                             throw new RuntimeException("Não Há funcionarios cadastrados");
                         }
                         listarFuncionarios();
                         break;
                     case "3":
-                        if (this.funcionarioModel.getAll() == null) {
+                        if (funcionarioController.getAll() == null) {
                             throw new RuntimeException("Não Há funcionarios cadastrados");
                         }
                         atualizarFuncionario();
                         break;
                     case "4":
-                        if (this.funcionarioModel.getAll() == null) {
+                        if (funcionarioController.getAll() == null) {
                             throw new RuntimeException("Não Há funcionarios cadastrados");
                         }
                         deletarFuncionario();
@@ -74,9 +73,9 @@ public class FuncionarioSubMenu {
                         break;
                 }
 
-            }catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
-            }catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println("Erro inesperado");
             }
         }
@@ -91,8 +90,8 @@ public class FuncionarioSubMenu {
     }
 
     public void cadastrarFuncionario() {
-        try{
-            Funcionario funcionario = new Funcionario();
+        try {
+
             String nome;
             String cargo;
             String ramal;
@@ -100,59 +99,54 @@ public class FuncionarioSubMenu {
             Integer idCampus;
 
             Scanner scanner = new Scanner(System.in);
+            CampusController campusController = new CampusController();
 
             System.out.println("Campi Cadastrados: ");
-            for (Campus c : campusModel.getAll()) {
+            for (Campus c : campusController.getAll()) {
                 System.out.println(c.toString());
             }
             System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
             input = scanner.nextLine();
             idCampus = Integer.parseInt(input);
-            campus = campusModel.get(idCampus);
-            if(campus == null){
-                throw new RuntimeException("Campus não encontrado");
-            }
-            funcionario.setCampus(campus);
 
             System.out.println("Digite o nome do Funcionario: ");
             nome = scanner.nextLine();
-            funcionario.setNome(nome);
 
             System.out.println("Digite o cargo do Funcionario: ");
             cargo = scanner.nextLine();
-            funcionario.setCargo(cargo);
 
             System.out.println("Digite o ramal do Funcionario: ");
             ramal = scanner.nextLine();
-            funcionario.setRamal(ramal);
 
-            this.funcionarioModel.create(funcionario);
+            FuncionarioController funcionarioController = new FuncionarioController();
+            funcionarioController.create(nome, cargo, ramal, idCampus);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void listarFuncionarios() {
+        FuncionarioController funcionarioController = new FuncionarioController();
         System.out.println("Listando todos os Funcionarios:");
-        for (Funcionario c : this.funcionarioModel.getAll()) {
+        for (Funcionario c : funcionarioController.getAll()) {
             System.out.println(c.toString());
         }
         clearAtributos();
     }
 
     public void atualizarFuncionario() {
-        try{
-            Funcionario funcionario = new Funcionario();
+        try {
+
             String nome;
             String cargo;
             String ramal;
@@ -161,63 +155,51 @@ public class FuncionarioSubMenu {
             Integer idCampus;
 
             Scanner scanner = new Scanner(System.in);
-
+            CampusController campusController = new CampusController();
             listarFuncionarios();
 
             System.out.println("Digite o id do Funcionario a ser atualizado: ");
             input = scanner.nextLine();
             idFuncionario = Integer.parseInt(input);
-            funcionario = this.funcionarioModel.get(idFuncionario);
-
-            if(funcionario == null){
-                throw new RuntimeException("Campus não encontrado");
-            }
 
             System.out.println("Campi Cadastrados: ");
-            for (Campus c : campusModel.getAll()) {
+            for (Campus c : campusController.getAll()) {
                 System.out.println(c.toString());
             }
+
             System.out.println("Digite o id do Campus ao qual o funcionario será vinculado: ");
             input = scanner.nextLine();
             idCampus = Integer.parseInt(input);
-            campus = campusModel.get(idCampus);
-
-            if(campus == null){
-                throw new RuntimeException("Campus não encontrado");
-            }
-            funcionario.setCampus(campus);
 
             System.out.println("Digite o nome do Funcionario: ");
             nome = scanner.nextLine();
-            funcionario.setNome(nome);
 
             System.out.println("Digite o cargo do Funcionario: ");
             cargo = scanner.nextLine();
-            funcionario.setCargo(cargo);
 
             System.out.println("Digite o ramal do Funcionario: ");
             ramal = scanner.nextLine();
-            funcionario.setRamal(ramal);
 
-            this.funcionarioModel.update(funcionario);
+            FuncionarioController funcionarioController = new FuncionarioController();
+            funcionarioController.update(idFuncionario, nome, cargo, ramal, idCampus);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void deletarFuncionario() {
-        try{
-            Funcionario funcionario = new Funcionario();
+        try {
+
             String input;
             Integer idFuncionario;
 
@@ -228,23 +210,21 @@ public class FuncionarioSubMenu {
             System.out.println("Digite o id do Funcionario a ser deletado: ");
             input = scanner.nextLine();
             idFuncionario = Integer.parseInt(input);
-            funcionario = this.funcionarioModel.get(idFuncionario);
 
-            if(funcionario == null){
-                throw new RuntimeException("Campus não encontrado");
-            }
-            this.funcionarioModel.remove(funcionario);
+
+            FuncionarioController funcionarioController = new FuncionarioController();
+            funcionarioController.remove(idFuncionario);
             clearAtributos();
 
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Array fora do limite");
-        }catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String fora do limite");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Valores nulos nao sao validos");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Número inválido");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

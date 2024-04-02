@@ -4,8 +4,9 @@
 
 package models;
 
-import entidades.sala.Sala;
+import entidades.Sala;
 import helpers.HelperUtil;
+import interfaces.IMetodos;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  * @atribute {@code Integer id}
  * @see Sala
  */
-public class SalaModel {
+public class SalaModel implements IMetodos<Sala> {
     private static ArrayList<Sala> salaList = new ArrayList<>();
     private static Integer id = 0;
 
@@ -41,7 +42,7 @@ public class SalaModel {
     }
 
     //TODO: Revisar essa parte
-    public void update(Sala sala) {
+    public Boolean update(Sala sala) {
         HelperUtil.validateObject(sala);
 
         for (Sala s : salaList) {
@@ -49,9 +50,10 @@ public class SalaModel {
                 s.setQtdLugares(sala.getQtdLugares());
                 s.setNumeroSala(sala.getNumeroSala());
                 s.setPredio(sala.getPredio());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public Sala get(int id) {
